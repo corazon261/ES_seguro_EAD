@@ -23,6 +23,7 @@ O documento principal está em:
 | Lucas Kaue Ribeiro Weber | _(preencher)_ |
 | Gustavo Borges Arrussul Veiga | _(preencher)_ |
 | Luiz Hermano Bernardes Martins | _(preencher)_ |
+| Renata Vassalo | _(preencher)_ |
 
 ## 🗂️ Estrutura do repositório
 

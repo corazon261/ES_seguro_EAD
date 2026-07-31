@@ -15,6 +15,7 @@
   - Lucas Kaue Ribeiro Weber
   - Gustavo Borges Arrussul Veiga
   - Luiz Hermano Bernardes Martins
+  - Renata Vassalo
 - **Endereço do repositório:** https://github.com/corazon261/ES_seguro_EAD
 - **Justificativa para a escolha do sistema:**
   _(Por que escolheram um app de delivery? Sugestão: possui múltiplos perfis de
