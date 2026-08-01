@@ -141,6 +141,23 @@ Modelo abaixo — dupliquem para cada caso.)_
 
 <!-- Copie o bloco do CA01 e preencha -->
 
+### CA04 — CA04 — Ataque de negação de serviço ao aplicativo de delivery
+
+- **Ator malicioso / agente:** Atacante externo utilizando ferramentas automatizadas (bots).
+- **Objetivo do abuso:** Tornar o aplicativo indisponível, impedindo que clientes, restaurantes e entregadores utilizem seus serviços.
+- **Condições necessárias:** O aplicativo deve estar acessível pela internet e não possuir mecanismos suficientes para limitar ou bloquear um grande volume de requisições simultâneas.
+  
+- **Sequência de ações (fluxo de abuso):**
+  
+1. O atacante utiliza ferramentas automatizadas para enviar milhares de requisições simultaneamente ao aplicativo.
+2. O servidor recebe um volume excessivo de solicitações e seus recursos ficam sobrecarregados.
+3. Clientes, restaurantes e entregadores enfrentam lentidão ou ficam impossibilitados de acessar e utilizar o sistema.
+- **Impacto esperado:**
+   Interrupção parcial ou total do serviço, perda de pedidos, prejuízos financeiros para restaurantes e para a plataforma, além da insatisfação dos usuários.
+  
+- **Categorias STRIDE relacionadas:**
+   Denial of Service (DoS).
+
 ---
 
 ## 4.7 Considerações finais
