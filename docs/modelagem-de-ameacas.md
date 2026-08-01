@@ -107,8 +107,9 @@ exemplos — substituam por ameaças do grupo.)_
 | T02 | Tampering | Pedido | _(exemplo)_ Usuário altera o valor do pedido antes do pagamento | Prejuízo financeiro |
 | T03 | Repudiation | _(preencher)_ | _(preencher)_ | _(preencher)_ |
 | T04 | Information Disclosure | Banco de dados | _(exemplo)_ Dados pessoais expostos por falha de autorização | Violação de privacidade |
-| T05 | Denial of Service | _(preencher)_ | _(preencher)_ | _(preencher)_ |
-| T06 | Elevation of Privilege | _(preencher)_ | _(preencher)_ | _(preencher)_ |
+| T05 | Denial of Service | API de pedidos | Um atacante envia um grande volume de requisições simultâneas para a API responsável pelo processamento de pedidos, consumindo os recursos do servidor e impedindo que novas solicitações legítimas sejam atendidas. | Clientes não conseguem realizar pedidos, restaurantes deixam de receber novas solicitações e ocorre indisponibilidade parcial do serviço. |
+| T06 | Denial of Service | Servidor de autenticação | Um atacante realiza milhares de tentativas simultâneas de login, sobrecarregando o servidor de autenticação e impedindo que usuários legítimos acessem suas contas. | Clientes, restaurantes e entregadores ficam impossibilitados de acessar o aplicativo, interrompendo o funcionamento da plataforma. |
+| T07 |
 
 > **Dica:** tente ter pelo menos 1–2 ameaças por categoria (6 a 12 no total).
 
