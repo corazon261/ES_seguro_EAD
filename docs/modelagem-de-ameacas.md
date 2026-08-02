@@ -141,7 +141,7 @@ Modelo abaixo — dupliquem para cada caso.)_
 
 <!-- Copie o bloco do CA01 e preencha -->
 
-### CA04 — CA04 — Ataque de negação de serviço ao aplicativo de delivery
+### CA04 — Ataque de negação de serviço ao aplicativo de delivery
 
 - **Ator malicioso / agente:** Atacante externo utilizando ferramentas automatizadas (bots).
 - **Objetivo do abuso:** Tornar o aplicativo indisponível, impedindo que clientes, restaurantes e entregadores utilizem seus serviços.
