@@ -1,48 +1,46 @@
 ## 3. Usuários, ativos e pontos de interação
 
-> **Responsável:** Gustavo (revisão e expansão desta seção). O rascunho abaixo já
-> traz a estrutura e o conteúdo base do sistema de delivery — sinta-se à vontade
-> para ajustar, detalhar ou acrescentar itens.
-
 ### 3.1 Usuários e perfis
 
-| Usuário ou perfil | Principais ações |
-| --- | --- |
-| Cliente | Consultar restaurantes e produtos, montar carrinho, realizar pedidos, pagar, acompanhar a entrega e avaliar |
-| Restaurante / Loja | Cadastrar e editar o cardápio, receber e aceitar pedidos, atualizar o status de preparo |
-| Entregador | Aceitar corridas, visualizar o endereço de entrega, atualizar a localização e confirmar a entrega |
-| Administrador | Gerenciar contas e permissões, moderar cadastros, resolver disputas e administrar a plataforma |
+| Usuário ou perfil | Descrição e Permissões | Principais ações |
+| --- | --- | --- |
+| **Cliente** | Usuário final da plataforma | Consultar restaurantes e produtos, montar carrinho, aplicar cupons, realizar pedidos, efetuar pagamentos, acompanhar a entrega em tempo real, interagir via chat e avaliar o serviço. |
+| **Restaurante / Loja** | Parceiro comercial credenciado | Cadastrar e editar o cardápio (produtos e preços), gerenciar horários de funcionamento, receber/aceitar/recusar pedidos, atualizar o status de preparo e solicitar suporte. |
+| **Entregador** | Prestador de serviço de logística | Visualizar corridas disponíveis, aceitar chamadas, acessar rota e endereço de entrega, transmitir geolocalização em tempo real e confirmar a entrega via código/validação. |
+| **Administrador** | Gestor do sistema com privilégios elevados | Gerenciar contas e níveis de acesso, moderar cadastros de lojas e entregadores, resolver disputas financeiras/reembolsos, visualizar logs de auditoria e configurar parâmetros da plataforma. |
+
+---
 
 ### 3.2 Ativos importantes
 
-São considerados ativos importantes os recursos que podem causar prejuízo caso
-sejam acessados, alterados, destruídos ou indisponibilizados indevidamente:
+São considerados ativos importantes todos os dados e recursos do sistema que necessitam de garantias de **Confidencialidade**, **Integridade** e **Disponibilidade (CID)** para evitar prejuízos operacionais, financeiros ou reputacionais:
 
-- credenciais de acesso (contas de clientes, restaurantes, entregadores e administradores);
-- dados pessoais e de contato (nome, e-mail, telefone, endereços de entrega);
-- dados de pagamento (cartões salvos, transações);
-- localização em tempo real de clientes e entregadores;
-- pedidos e seus valores;
-- histórico de pedidos e de consumo;
-- avaliações e notas;
-- mensagens trocadas no chat cliente↔entregador;
-- permissões e papéis dos usuários;
-- registros e logs das operações;
-- disponibilidade do serviço, especialmente em horários de pico.
+*   **Credenciais de Acesso e Autenticação:** Hashes de senhas, tokens de sessão (JWT), chaves de API e tokens de autenticação multifator de todos os perfis.
+*   **Dados Pessoais Identificáveis (PII):** Nomes completos, e-mails, telefones, CPF/CNPJ e endereços cadastrados e de entrega (sujeitos à legislação de proteção de dados).
+*   **Dados e Transações Financeiras:** Tokens de cartão de crédito fornecidos pelo gateway, histórico de pagamentos, repasses a restaurantes/entregadores e chaves PIX.
+*   **Dados de Localização em Tempo Real:** Coordenadas de geolocalização (GPS) contínuas de entregadores e clientes durante o processo de entrega.
+*   **Integridade do Negócio e Pedidos:** Preços dos produtos, valores de frete, regras de cálculo do carrinho, cupons de desconto e status transacional dos pedidos.
+*   **Comunicações e Interações:** Histórico de mensagens enviadas no chat interno (Cliente ↔ Entregador ↔ Suporte) e registros de avaliações/notas.
+*   **Registros de Auditoria (Logs):** Trilha de auditoria das operações realizadas no sistema, alterações de permissão e acessos a dados sensíveis.
+*   **Disponibilidade do Serviço:** Infraestrutura de servidores, APIs e banco de dados mantida operacional, especialmente em horários de pico de demanda.
+
+---
 
 ### 3.3 Pontos de interação e componentes
 
-| Elemento | Função |
-| --- | --- |
-| Aplicativo móvel / Portal web | Interface utilizada por clientes, restaurantes e entregadores |
-| Serviço de autenticação | Valida a identidade e as credenciais dos usuários |
-| Aplicação / API | Processa as regras de negócio e as operações do sistema |
-| Banco de dados | Armazena contas, pedidos, dados pessoais, pagamentos e logs |
-| Gateway de pagamento (serviço externo) | Processa as transações financeiras |
-| Serviço de mapas / geolocalização (serviço externo) | Fornece rotas e a localização em tempo real |
-| Serviço de notificações | Envia avisos sobre o status dos pedidos e entregas |
+| Elemento | Tipo | Função e Considerações de Segurança |
+| --- | --- | --- |
+| **Aplicativo Móvel / Web** | Cliente (Frontend) | Interface do cliente, restaurante e entregador. Ponto de entrada de requisições; exige validação e sanitização estrita no servidor. |
+| **Serviço de Autenticação** | Componente Interno | Emite e valida tokens de acesso (JWT/OAuth2), gerencia sessões e controla o controle de acesso baseado em funções (RBAC). |
+| **Aplicação / API Gateway** | Componente Interno | Centraliza e processa as regras de negócio, valida os dados de entrada, autoriza chamadas e redireciona tráfego com proteção HTTPS/TLS. |
+| **Banco de Dados Relacional** | Armazenamento | Armazena dados cadastrais, pedidos, logs e configurações. Deve possuir controle rígido de acesso, encriptação em repouso e backups segregados. |
+| **Gateway de Pagamento** | Serviço Externo | Processa transações via cartão e PIX de forma segura (aderente ao padrão PCI-DSS), retornando apenas confirmações/tokens. |
+| **Serviço de Mapas e Geolocalização** | Serviço Externo | Processa coordenadas GPS e calcula rotas/estimativas de entrega via APIs externas com autenticação por chave de API restrita. |
+| **Serviço de Notificações (Push/SMS/E-mail)** | Serviço Externo | Dispara alertas sobre status do pedido e códigos de verificação em dois fatores (2FA). |
+
+---
 
 ### 3.4 Diagramas
 
-- [Diagrama de contexto](<diagramas/diagrama-contexto.md>) — usuários, plataforma e serviços externos.
-- [Diagrama de fluxo de dados](<diagramas/diagrama-fluxo-de-dados.md>) — caminho dos dados em um pedido.
+- [Diagrama de contexto](diagramas/diagrama-contexto.md) — Visão dos atores, plataforma e serviços externos integrados.
+- [Diagrama de fluxo de dados](diagramas/diagrama-fluxo-de-dados.md) — Mapeamento do caminho dos dados desde a criação até a entrega do pedido.
