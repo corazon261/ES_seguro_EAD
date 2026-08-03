@@ -100,27 +100,44 @@ Information Disclosure.
 
 ---
 
-### CA03 — _(título — a preencher por Luiz)_
+### CA03 — Coleta em massa de dados pessoais por falha de autorização
 
-> Sugestão de tema (alinhado à categoria do Luiz): consulta indevida de dados de
-> terceiros por falha de autorização (Information Disclosure), por exemplo
-> alterando um identificador de pedido/usuário na requisição.
+**Ator:** cliente legítimo mal-intencionado (já cadastrado e autenticado na
+plataforma).
 
-**Ator:** _(preencher)_
-
-**Objetivo:** _(preencher)_
+**Objetivo:** obter, em grande escala, os dados pessoais e os endereços de
+outros clientes do RapidoFood, para revenda ou para aplicar golpes
+direcionados.
 
 **Condições necessárias:**
 
-- _(preencher)_
+- os pedidos são identificados por códigos sequenciais e previsíveis;
+- a API devolve os dados de um pedido sem verificar se ele pertence ao usuário
+  autenticado (falha de controle de acesso a nível de objeto);
+- não há limite de requisições por conta (sem rate limiting);
+- não há monitoramento capaz de detectar um volume anormal de consultas.
 
 **Fluxo de abuso:**
 
-1. _(preencher)_
+1. O atacante cria uma conta comum no aplicativo e realiza um pedido verdadeiro,
+   sem levantar suspeita.
+2. Ao acompanhar o próprio pedido, observa que a requisição identifica o pedido
+   por um código sequencial.
+3. Substitui esse código pelo de outro pedido e percebe que o sistema devolve os
+   dados normalmente, mesmo o pedido não sendo dele.
+4. Automatiza a consulta, percorrendo faixas inteiras de códigos e armazenando
+   as respostas.
+5. Monta uma base com nome, telefone, endereço de entrega e histórico de consumo
+   de milhares de clientes, sem que a plataforma registre ou bloqueie a
+   atividade.
 
-**Impacto esperado:** _(preencher)_
+**Impacto esperado:** vazamento em massa de dados pessoais, exposição dos
+clientes a golpes e a riscos à integridade física, violação da Lei Geral de
+Proteção de Dados (LGPD) com risco de sanção da ANPD, além de dano à reputação
+da plataforma.
 
-**Categorias STRIDE relacionadas:** _(ex.: Information Disclosure)_
+**Categorias STRIDE relacionadas:** Information Disclosure e Elevation of
+Privilege.
 
 ---
 
