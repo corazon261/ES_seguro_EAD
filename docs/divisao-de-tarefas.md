@@ -5,24 +5,34 @@
 > de guia — colaborem e ajudem uns aos outros, mas cada um é responsável por
 > garantir que suas contribuições apareçam no histórico.
 
-Sistema escolhido: **Aplicativo de Delivery**.
+Sistema escolhido: **Aplicativo de Delivery** (RapidoFood).
+
+> **Estrutura do repositório** (espelha o exemplo do professor):
+> `README.md` (seções 1–2) · `Passo 1 - Usuários, ativos e pontos de interação.md`
+> (seção 3) · `Passo 2 (Entregavel 1) - Modelagem de ameaças e Casos de Abuso.md`
+> (seções 5, 6 e 7 = **Entregável 1**).
 
 ## Distribuição
 
-| Integrante | Seções do documento | Categorias STRIDE | Caso de abuso | Diagrama |
-| ---------- | ------------------- | ----------------- | ------------- | -------- |
-| **Lucas Kaue Ribeiro Weber** | 4.1 Identificação · 4.2 Descrição · organização do repositório | Spoofing · Elevation of Privilege | CA01 | Revisão geral |
-| **Gustavo Borges Arrussul Veiga** | 4.3 Usuários, ativos e pontos de interação | Tampering · Repudiation | CA02 | Diagrama de fluxo de dados |
-| **Luiz Hermano Bernardes Martins** | 4.4 Visão geral da arquitetura / fluxo | Information Disclosure | CA03 | Diagrama de contexto |
-| **Renata Vassalo** | 4.7 Considerações finais | Denial of Service | CA04 | Diagrama de casos de abuso |
+| Integrante | Seção do documento | Categorias STRIDE | Caso de abuso | Diagrama |
+| ---------- | ------------------ | ----------------- | ------------- | -------- |
+| **Lucas Kaue Ribeiro Weber** | README (1 Identificação · 2 Descrição) · organização do repositório | Spoofing · Elevation of Privilege | CA01 | Revisão geral |
+| **Gustavo Borges Arrussul Veiga** | Passo 1 — seção 3 (Usuários, ativos e pontos de interação) | Tampering · Repudiation | CA02 | Diagrama de fluxo de dados |
+| **Luiz Hermano Bernardes Martins** | (apoio ao Passo 1 / visão de fluxo) | Information Disclosure | CA03 | Diagrama de contexto |
+| **Renata Vassalo** | Passo 2 — seção 7 (Considerações finais) | Denial of Service | CA04 | Diagrama de casos de abuso |
 
-### Seção colaborativa
+### Trabalho colaborativo (arquivo do Entregável 1)
 
-- **4.5 Modelagem de ameaças com STRIDE (tabela):** cada integrante adiciona as
-  linhas correspondentes às suas categorias STRIDE. Ao final, a tabela deve
-  cobrir todas as 6 categorias.
-- **4.6 Casos de abuso:** cada integrante escreve o seu caso (CA01–CA04) seguindo
-  o modelo do documento.
+- **Seção 5 — STRIDE (tabela):** cada integrante adiciona as linhas das suas
+  categorias. Ao final, a tabela deve cobrir todas as 6 categorias.
+- **Seção 6 — Casos de abuso:** cada integrante escreve o seu caso (CA01–CA04).
+
+### Status atual
+
+- ✅ Lucas — README (1 e 2), STRIDE Spoofing/Elevation (T01, T07–T09), CA01.
+- ✅ Renata — STRIDE DoS (T05, T06) e CA04.
+- ⬜ Gustavo — revisar/expandir seção 3, STRIDE Tampering/Repudiation (T02, T03), CA02.
+- ⬜ Luiz — STRIDE Information Disclosure (T04), CA03.
 
 ## Como cada um deve contribuir (passo a passo)
 
