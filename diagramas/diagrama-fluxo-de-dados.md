@@ -1,25 +1,27 @@
 # Diagrama de fluxo de dados — Pedido no RapidoFood
 
-Mostra o caminho dos dados desde o login do cliente até a entrega. O código
-Mermaid abaixo é o **arquivo-fonte**; o GitHub o renderiza como imagem.
+Mostra, em ordem, o caminho dos dados desde o login do cliente até a entrega. O
+código Mermaid abaixo é o **arquivo-fonte**; o GitHub o renderiza como imagem.
+Uma imagem PNG de backup está em [`imagens/`](../imagens/).
 
 ```mermaid
-flowchart LR
-    Cliente([Cliente])
-    Restaurante([Restaurante])
-    Entregador([Entregador])
-    Auth[Serviço de autenticação]
-    API[API de pedidos]
-    Pag[[Gateway de pagamento]]
-    DB[(Banco de dados)]
+sequenceDiagram
+    actor Cliente
+    participant Auth as Serviço de autenticação
+    participant API as API de pedidos
+    participant Pag as Gateway de pagamento
+    participant DB as Banco de dados
+    participant Restaurante
+    participant Entregador
 
-    Cliente -->|1. login / credenciais| Auth
-    Cliente -->|2. monta e envia o pedido| API
-    API -->|3. solicita cobrança| Pag
-    Pag -->|4. confirmação do pagamento| API
-    API -->|5. registra pedido e dados| DB
-    API -->|6. envia pedido| Restaurante
-    API -->|7. corrida + endereço de entrega| Entregador
-    Entregador -->|8. localização em tempo real| API
-    API -->|9. status e mapa da entrega| Cliente
+    Cliente->>Auth: 1. login / credenciais
+    Auth-->>Cliente: sessão autenticada
+    Cliente->>API: 2. monta e envia o pedido
+    API->>Pag: 3. solicita cobrança
+    Pag-->>API: 4. confirmação do pagamento
+    API->>DB: 5. registra pedido e dados
+    API->>Restaurante: 6. envia pedido
+    API->>Entregador: 7. corrida + endereço de entrega
+    Entregador->>API: 8. localização em tempo real
+    API-->>Cliente: 9. status e mapa da entrega
 ```
