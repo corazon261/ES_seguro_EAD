@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1010 570" width="1010" height="570" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>RapidoFood — Diagrama de contexto (nível 0)</title>
+  <desc>Visão de contexto do sistema RapidoFood: quatro perfis de usuário acessam o aplicativo móvel/portal web, que se comunica com a API central; a API usa o serviço de autenticação e o banco de dados dentro da fronteira de confiança, e integra três serviços externos (gateway de pagamento, mapas/geolocalização e notificações).</desc>
+
+  <defs>
+    <marker id="seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4d4d4d"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1010" height="570" fill="#ffffff"/>
+
+  <!-- ============ fronteira de confianca ============ -->
+  <rect x="408" y="22" width="272" height="472" rx="8" fill="#f9f6fc" stroke="#9673a6" stroke-width="2" stroke-dasharray="8 5"/>
+  <text x="544" y="42" text-anchor="middle" font-size="12" font-style="italic" fill="#6b4c86">Fronteira de confiança — RapidoFood</text>
+
+  <!-- ============ atores ============ -->
+  <g stroke="#333333" stroke-width="2" fill="none" stroke-linecap="round">
+    <!-- Cliente -->
+    <circle cx="75" cy="72" r="12" fill="#ffffff"/>
+    <line x1="75" y1="84" x2="75" y2="116"/><line x1="57" y1="96" x2="93" y2="96"/>
+    <line x1="75" y1="116" x2="61" y2="138"/><line x1="75" y1="116" x2="89" y2="138"/>
+    <!-- Restaurante -->
+    <circle cx="75" cy="192" r="12" fill="#ffffff"/>
+    <line x1="75" y1="204" x2="75" y2="236"/><line x1="57" y1="216" x2="93" y2="216"/>
+    <line x1="75" y1="236" x2="61" y2="258"/><line x1="75" y1="236" x2="89" y2="258"/>
+    <!-- Entregador -->
+    <circle cx="75" cy="312" r="12" fill="#ffffff"/>
+    <line x1="75" y1="324" x2="75" y2="356"/><line x1="57" y1="336" x2="93" y2="336"/>
+    <line x1="75" y1="356" x2="61" y2="378"/><line x1="75" y1="356" x2="89" y2="378"/>
+    <!-- Administrador -->
+    <circle cx="75" cy="432" r="12" fill="#ffffff"/>
+    <line x1="75" y1="444" x2="75" y2="476"/><line x1="57" y1="456" x2="93" y2="456"/>
+    <line x1="75" y1="476" x2="61" y2="498"/><line x1="75" y1="476" x2="89" y2="498"/>
+  </g>
+  <g text-anchor="middle" font-size="13" fill="#1a1a1a">
+    <text x="75" y="157">Cliente</text>
+    <text x="75" y="277">Restaurante / Loja</text>
+    <text x="75" y="397">Entregador</text>
+    <text x="75" y="517">Administrador</text>
+  </g>
+
+  <!-- ============ ligacoes ator -> canal ============ -->
+  <g stroke="#4d4d4d" stroke-width="1.6" fill="none" marker-start="url(#seta)" marker-end="url(#seta)">
+    <path d="M 108 105 L 150 105 L 150 215 L 190 215"/>
+    <path d="M 108 225 L 160 225 L 160 235 L 190 235"/>
+    <path d="M 108 345 L 175 345 L 175 255 L 190 255"/>
+    <path d="M 108 465 L 182 465 L 182 275 L 190 275"/>
+  </g>
+
+  <!-- ============ aplicativo / portal ============ -->
+  <rect x="190" y="200" width="170" height="90" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="275" y="238" text-anchor="middle" font-size="13" fill="#1a1a1a">Aplicativo móvel /</text>
+  <text x="275" y="257" text-anchor="middle" font-size="13" fill="#1a1a1a">Portal web</text>
+
+  <!-- canal -> api -->
+  <line x1="360" y1="245" x2="440" y2="245" stroke="#4d4d4d" stroke-width="1.6" marker-start="url(#seta)" marker-end="url(#seta)"/>
+
+  <!-- ============ api central ============ -->
+  <rect x="440" y="190" width="210" height="110" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="2.5"/>
+  <text x="545" y="235" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a1a1a">RapidoFood</text>
+  <text x="545" y="256" text-anchor="middle" font-size="13" fill="#1a1a1a">Aplicação / API</text>
+
+  <!-- ============ servico de autenticacao ============ -->
+  <rect x="440" y="88" width="210" height="58" rx="8" fill="#ffe6cc" stroke="#d79b00" stroke-width="2"/>
+  <text x="545" y="123" text-anchor="middle" font-size="13" fill="#1a1a1a">Serviço de autenticação</text>
+  <line x1="545" y1="190" x2="545" y2="146" stroke="#4d4d4d" stroke-width="1.6" marker-start="url(#seta)" marker-end="url(#seta)"/>
+
+  <!-- ============ banco de dados ============ -->
+  <path d="M 455 394 A 90 14 0 0 1 635 394 L 635 452 A 90 14 0 0 1 455 452 Z" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+  <ellipse cx="545" cy="394" rx="90" ry="14" fill="#ffffff" stroke="#666666" stroke-width="2"/>
+  <text x="545" y="432" text-anchor="middle" font-size="13" fill="#1a1a1a">Banco de dados</text>
+  <line x1="545" y1="300" x2="545" y2="380" stroke="#4d4d4d" stroke-width="1.6" marker-start="url(#seta)" marker-end="url(#seta)"/>
+
+  <!-- ============ servicos externos ============ -->
+  <g stroke-dasharray="7 4" stroke-width="2">
+    <rect x="760" y="60" width="210" height="68" rx="8" fill="#f8cecc" stroke="#b85450"/>
+    <rect x="760" y="211" width="210" height="78" rx="8" fill="#f8cecc" stroke="#b85450"/>
+    <rect x="760" y="372" width="210" height="68" rx="8" fill="#f8cecc" stroke="#b85450"/>
+  </g>
+  <g text-anchor="middle" font-size="13" fill="#1a1a1a">
+    <text x="865" y="90">Gateway de pagamento</text>
+    <text x="865" y="109" font-size="11" fill="#7a3b38">(serviço externo)</text>
+    <text x="865" y="241">Serviço de mapas /</text>
+    <text x="865" y="259">geolocalização</text>
+    <text x="865" y="277" font-size="11" fill="#7a3b38">(serviço externo)</text>
+    <text x="865" y="402">Serviço de notificações</text>
+    <text x="865" y="421" font-size="11" fill="#7a3b38">(serviço externo)</text>
+  </g>
+
+  <!-- api -> servicos externos -->
+  <g stroke="#4d4d4d" stroke-width="1.6" fill="none" marker-start="url(#seta)" marker-end="url(#seta)">
+    <path d="M 650 215 L 710 215 L 710 94 L 760 94"/>
+    <path d="M 650 245 L 710 245 L 710 250 L 760 250"/>
+    <path d="M 650 280 L 710 280 L 710 406 L 760 406"/>
+  </g>
+
+  <!-- ============ legenda ============ -->
+  <g font-size="11" fill="#444444">
+    <rect x="190" y="500" width="16" height="12" rx="2" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+    <text x="213" y="510">sistema analisado</text>
+    <rect x="330" y="500" width="16" height="12" rx="2" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+    <text x="353" y="510">interface de acesso</text>
+    <rect x="475" y="500" width="16" height="12" rx="2" fill="#ffe6cc" stroke="#d79b00" stroke-width="1.5"/>
+    <text x="498" y="510">componente interno</text>
+    <rect x="630" y="500" width="16" height="12" rx="2" fill="#f8cecc" stroke="#b85450" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="653" y="510">serviço externo (terceiro)</text>
+  </g>
+</svg>

@@ -43,4 +43,56 @@ São considerados ativos importantes todos os dados e recursos do sistema que ne
 ### 3.4 Diagramas
 
 - [Diagrama de contexto](diagramas/diagrama-contexto.md) — Visão dos atores, plataforma e serviços externos integrados.
+- [Diagrama de contexto detalhado](#41-diagrama-de-contexto) — versão com fronteira de confiança e legenda (seção 4.1 abaixo).
 - [Diagrama de fluxo de dados](diagramas/diagrama-fluxo-de-dados.md) — Mapeamento do caminho dos dados desde a criação até a entrega do pedido.
+
+## 4. Visão geral da arquitetura ou fluxo
+
+### 4.1 Diagrama de contexto
+
+O diagrama abaixo apresenta uma visão simplificada de como os usuários e os
+componentes do RapidoFood interagem. Os quatro perfis de usuário acessam o
+sistema sempre pelo aplicativo móvel ou pelo portal web, que por sua vez se
+comunica com a aplicação/API central. Dentro da fronteira de confiança ficam os
+componentes controlados pela equipe (API, serviço de autenticação e banco de
+dados); fora dela, em vermelho tracejado, estão os três serviços de terceiros.
+
+![Diagrama de contexto do RapidoFood](diagramas/diagrama-contexto-detalhado.svg)
+
+> Arquivo-fonte do diagrama, versionado no repositório:
+> [`diagramas/diagrama-contexto-detalhado.svg`](diagramas/diagrama-contexto-detalhado.svg)
+> — formato vetorial em texto, que serve tanto de imagem quanto de fonte editável.
+> Existe também uma versão simplificada em Mermaid
+> ([`diagramas/diagrama-contexto.md`](diagramas/diagrama-contexto.md)), mantida
+> como referência rápida.
+
+### 4.2 Fluxo principal de um pedido
+
+1. O **cliente** se autentica pelo aplicativo; o serviço de autenticação valida
+   as credenciais e devolve a sessão.
+2. O cliente busca restaurantes e monta o carrinho; a API consulta o cardápio no
+   banco de dados.
+3. Ao finalizar, a API envia os dados da transação ao **gateway de pagamento** e
+   aguarda a confirmação.
+4. Confirmado o pagamento, o pedido é registrado e o **restaurante** recebe a
+   solicitação para preparo.
+5. Um **entregador** aceita a corrida e passa a enviar sua localização, que a API
+   repassa ao serviço de mapas e ao aplicativo do cliente.
+6. A cada mudança de status, o serviço de notificações avisa os envolvidos.
+7. Concluída a entrega, o cliente pode avaliar o pedido, e o **administrador**
+   acompanha a operação e trata eventuais disputas.
+
+### 4.3 Pontos sensíveis do fluxo
+
+Do ponto de vista de segurança, três travessias merecem atenção especial, porque
+é nelas que dados sensíveis saem do controle direto da aplicação:
+
+| Travessia | Dados que circulam | Preocupação principal |
+| --- | --- | --- |
+| Aplicativo ↔ API | credenciais, endereços, pedidos e valores | é o ponto exposto à internet e a porta de entrada da maioria dos ataques |
+| API ↔ gateway de pagamento | dados de pagamento e valores das transações | depende de um terceiro; uma falha na integração afeta diretamente o dinheiro |
+| API ↔ aplicativo do entregador | nome, telefone, endereço e localização em tempo real | expõe dados pessoais do cliente a um usuário que não faz parte da plataforma de forma permanente |
+
+Essa última travessia é justamente a origem das ameaças de exposição de
+informações descritas em T04 e T10 na
+[modelagem de ameaças](<Passo 2 (Entregavel 1) - Modelagem de ameaças e Casos de Abuso.md>).
