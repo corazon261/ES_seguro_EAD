@@ -151,6 +151,116 @@ insatisfação dos usuários.
 
 **Categorias STRIDE relacionadas:** Denial of Service.
 
+---
+
+### CA05 — Entregas falsas por falsificação de localização (GPS spoofing)
+
+**Ator:** entregador mal-intencionado (usuário legítimo com má-fé).
+
+**Objetivo:** receber o pagamento por corridas sem realizar a entrega,
+simulando deslocamento e conclusão do pedido por meio da falsificação do sinal
+de GPS do dispositivo.
+
+**Condições necessárias:**
+
+- o aplicativo confia exclusivamente na localização informada pelo dispositivo
+  do entregador, sem validação cruzada;
+- não há confirmação de entrega pelo cliente (por exemplo, código OTP) nem
+  verificação de coerência entre a rota percorrida e o tempo de deslocamento;
+- ferramentas de *fake GPS* conseguem alterar a localização reportada pelo
+  aparelho.
+
+**Fluxo de abuso:**
+
+1. O entregador aceita uma corrida e recebe o endereço de entrega.
+2. Em vez de se deslocar, utiliza um aplicativo de *fake GPS* para simular que
+   está percorrendo a rota até o endereço do cliente.
+3. O aplicativo atualiza a localização falsa e considera que o entregador chegou
+   ao destino.
+4. O entregador marca o pedido como "entregue" sem que o cliente tenha recebido.
+5. A plataforma registra a entrega como concluída e libera o repasse do valor ao
+   entregador.
+
+**Impacto esperado:** prejuízo financeiro ao cliente (que paga sem receber) e à
+plataforma (repasse indevido e reembolsos), fraude recorrente, disputas de
+difícil resolução e perda de confiança no serviço.
+
+**Categorias STRIDE relacionadas:** Spoofing e Repudiation. _(Relaciona-se à
+ameaça T07 da tabela STRIDE.)_
+
+---
+
+### CA06 — _(rascunho — Fraude de cupons com múltiplas contas)_
+
+> **A preencher.** Tema sugerido: um usuário cria diversas contas falsas para
+> abusar repetidamente de cupons de "primeiro pedido"/descontos de boas-vindas.
+> Relaciona-se a **Spoofing** e ao abuso de regra de negócio.
+
+**Ator:** _(preencher)_
+
+**Objetivo:** _(preencher)_
+
+**Condições necessárias:**
+
+- _(preencher — ex.: cadastro não valida unicidade real de pessoa/dispositivo; cupom liberado por conta e não por CPF/cartão)_
+
+**Fluxo de abuso:**
+
+1. _(preencher)_
+
+**Impacto esperado:** _(preencher)_
+
+**Categorias STRIDE relacionadas:** _(ex.: Spoofing)_
+
+---
+
+### CA07 — _(rascunho — Cadastro de restaurante ou entregador falso)_
+
+> **A preencher.** Tema sugerido: um atacante cadastra um restaurante ou
+> entregador falso sem verificação adequada de identidade/habilitação, obtendo
+> acesso a dados de clientes (endereços, telefones) ou recebendo pedidos.
+> Relaciona-se a **Spoofing** e **Information Disclosure**.
+
+**Ator:** _(preencher)_
+
+**Objetivo:** _(preencher)_
+
+**Condições necessárias:**
+
+- _(preencher — ex.: o cadastro de parceiros/entregadores não valida documentos ou habilitação)_
+
+**Fluxo de abuso:**
+
+1. _(preencher)_
+
+**Impacto esperado:** _(preencher)_
+
+**Categorias STRIDE relacionadas:** _(ex.: Spoofing, Information Disclosure)_
+
+---
+
+### CA08 — _(rascunho — Manipulação de avaliações)_
+
+> **A preencher.** Tema sugerido: um restaurante ou concorrente insere
+> avaliações falsas para inflar a própria nota ou derrubar a de um concorrente.
+> Relaciona-se a **Tampering** e **Repudiation**.
+
+**Ator:** _(preencher)_
+
+**Objetivo:** _(preencher)_
+
+**Condições necessárias:**
+
+- _(preencher — ex.: avaliações aceitas sem vínculo com um pedido real concluído)_
+
+**Fluxo de abuso:**
+
+1. _(preencher)_
+
+**Impacto esperado:** _(preencher)_
+
+**Categorias STRIDE relacionadas:** _(ex.: Tampering, Repudiation)_
+
 ## 7. Considerações finais
 
 > **Responsável:** Renata. Estrutura abaixo para preencher com a síntese do grupo.
