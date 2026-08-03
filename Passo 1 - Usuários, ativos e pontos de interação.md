@@ -41,3 +41,8 @@ sejam acessados, alterados, destruídos ou indisponibilizados indevidamente:
 | Gateway de pagamento (serviço externo) | Processa as transações financeiras |
 | Serviço de mapas / geolocalização (serviço externo) | Fornece rotas e a localização em tempo real |
 | Serviço de notificações | Envia avisos sobre o status dos pedidos e entregas |
+
+### 3.4 Diagramas
+
+- [Diagrama de contexto](<diagramas/diagrama-contexto.md>) — usuários, plataforma e serviços externos.
+- [Diagrama de fluxo de dados](<diagramas/diagrama-fluxo-de-dados.md>) — caminho dos dados em um pedido.

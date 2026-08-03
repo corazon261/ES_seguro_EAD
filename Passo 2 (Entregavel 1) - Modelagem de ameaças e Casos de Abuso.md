@@ -35,6 +35,9 @@ autorizados (Elevation of Privilege).
 
 ## 6. Casos de abuso
 
+> Visão geral: [Diagrama de casos de abuso](<diagramas/casos-de-abuso.md>)
+> (atores maliciosos, casos CA01–CA04 e categorias STRIDE envolvidas).
+
 ### CA01 — Sequestro de conta e escalonamento para acesso administrativo
 
 **Ator:** atacante externo (usuário mal-intencionado).

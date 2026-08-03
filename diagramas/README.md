@@ -1,20 +1,21 @@
 # Diagramas
 
-Coloque aqui os diagramas do trabalho, **sempre versionando o arquivo-fonte
-junto com a imagem exportada** (o enunciado exige os arquivos-fonte no repo,
-não apenas links externos).
+Diagramas do trabalho em **Mermaid** — o código-fonte é texto (versionado aqui) e
+o **GitHub renderiza como imagem** automaticamente, atendendo à exigência de
+manter os arquivos-fonte no repositório.
 
-## Sugestões de diagramas (item 4.4 e 4.6)
+| Diagrama | Arquivo | Referência na divisão |
+| --- | --- | --- |
+| Diagrama de contexto | [diagrama-contexto.md](diagrama-contexto.md) | Luiz |
+| Diagrama de fluxo de dados | [diagrama-fluxo-de-dados.md](diagrama-fluxo-de-dados.md) | Gustavo |
+| Diagrama de casos de abuso | [casos-de-abuso.md](casos-de-abuso.md) | Renata |
 
-- `diagrama-contexto.drawio` + `diagrama-contexto.png` — usuários, serviços e BD
-- `fluxo-de-dados.drawio` + `fluxo-de-dados.png` — diagrama de fluxo de dados
-- `casos-de-abuso.drawio` + `casos-de-abuso.png` — casos de abuso
+> Os diagramas atuais são um ponto de partida. Cada responsável pode ajustar,
+> detalhar ou, se preferir, refazer em uma ferramenta gráfica (ex.: draw.io /
+> Excalidraw), exportando **imagem + arquivo-fonte** para esta pasta.
 
-## Ferramentas recomendadas (geram arquivo-fonte editável)
+## Ferramentas alternativas (geram arquivo-fonte editável)
 
 - [draw.io / diagrams.net](https://app.diagrams.net) → exporta `.drawio` + `.png`
 - [Excalidraw](https://excalidraw.com) → salva `.excalidraw` + `.png`
-- Mermaid (texto) → pode ser embutido direto no Markdown
-
-> Após exportar, referencie a imagem no documento:
-> `![Diagrama de contexto](../diagramas/diagrama-contexto.png)`
+- Mermaid (texto) → já usado nos arquivos acima; renderiza direto no GitHub
