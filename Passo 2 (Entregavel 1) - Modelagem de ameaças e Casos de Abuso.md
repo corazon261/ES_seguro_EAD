@@ -9,8 +9,8 @@ descrição no [README.md](README.md) e os usuários/ativos no
 | ID | Categoria STRIDE | Componente ou ativo | Ameaça identificada | Possível impacto |
 | --- | --- | --- | --- | --- |
 | T01 | Spoofing | Conta do usuário | Um atacante utiliza credenciais roubadas (vazamento de outro serviço, phishing ou credential stuffing) para acessar a conta de outra pessoa, já que o login não exige múltiplo fator de autenticação. | Acesso a dados pessoais e endereços, realização de pedidos fraudulentos e uso do saldo/cartão salvo da vítima. |
-| T02 | Tampering | _(a preencher por Gustavo)_ | _(ameaça de alteração indevida de dados — ex.: alteração do valor ou dos itens de um pedido antes do pagamento)_ | _(preencher)_ |
-| T03 | Repudiation | _(a preencher por Gustavo)_ | _(ameaça de negar uma ação — ex.: usuário nega ter feito um pedido/cancelamento e não há logs confiáveis)_ | _(preencher)_ |
+| T02 | Tampering | Carrinho de Compras / API de Pedidos | Um cliente mal-intencionado intercepta e altera a requisição HTTP do pedido (ex.: utilizando proxy como Burp Suite) para modificar o preço unitário dos itens ou zerar o valor da taxa de entrega antes de enviar ao servidor. | Prejuízo financeiro direto para os restaurantes e para a plataforma, inconsistência no fluxo financeiro e registros de pedidos com valores incorretos. |
+| T03 | Repudiation | Logs de Transação e Confirmação de Entrega | Um entregador alega ter realizado a entrega do pedido sem de fato ter entregado, ou um cliente nega ter recebido o pedido para solicitar reembolso indevido, em um cenário sem geração de código de validação OTP ou registros/logs auditáveis com timestamp. | Dificuldade no rastreamento e na resolução de disputas financeiras, prejuízos com reembolsos indevidos e perda de confiabilidade nas operações da plataforma. |
 | T04 | Information Disclosure | _(a preencher por Luiz)_ | _(exposição indevida de informações — ex.: falha de autorização expõe dados pessoais ou endereços de terceiros)_ | _(preencher)_ |
 | T05 | Denial of Service | API de pedidos | Um atacante envia um grande volume de requisições simultâneas para a API responsável pelo processamento de pedidos, consumindo os recursos do servidor e impedindo que novas solicitações legítimas sejam atendidas. | Clientes não conseguem realizar pedidos, restaurantes deixam de receber novas solicitações e ocorre indisponibilidade parcial do serviço. |
 | T06 | Denial of Service | Servidor de autenticação | Um atacante realiza milhares de tentativas simultâneas de login, sobrecarregando o servidor de autenticação e impedindo que usuários legítimos acessem suas contas. | Clientes, restaurantes e entregadores ficam impossibilitados de acessar o aplicativo, interrompendo o funcionamento da plataforma. |
@@ -73,27 +73,29 @@ Information Disclosure.
 
 ---
 
-### CA02 — _(título — a preencher por Gustavo)_
+### CA02 — Manipulação de valores no carrinho de compras e falsificação de pagamento
 
-> Sugestão de tema (alinhado às categorias do Gustavo): alteração indevida de um
-> pedido/valor (Tampering) e/ou negação de uma operação por falta de logs
-> confiáveis (Repudiation).
+**Ator:** cliente mal-intencionado (usuário da plataforma).
 
-**Ator:** _(preencher)_
-
-**Objetivo:** _(preencher)_
+**Objetivo:** adquirir refeições e produtos pagando um valor significativamente menor do que o estipulado pelo restaurante ou com taxa de entrega zerada.
 
 **Condições necessárias:**
-
-- _(preencher)_
+- O aplicativo móvel/web valida as regras de negócio ou calcula o total do pedido predominantemente no lado do cliente (frontend);
+- A API de pedidos aceita os valores enviados no corpo da requisição sem revalidá-los contra o banco de dados do cardápio oficial;
+- Ausência de assinatura digital ou verificação de integridade no payload da transação.
 
 **Fluxo de abuso:**
+1. O atacante adiciona itens de alto valor ao carrinho de compras no aplicativo.
+2. Antes de finalizar o pedido, ativa uma ferramenta de interceptação de tráfego HTTP/HTTPS (ex.: Burp Suite).
+3. O atacante clica em "Finalizar Pedido" e intercepta a requisição `POST /api/v1/pedidos`.
+4. Altera o parâmetro `preco_unitario` de R$ 80,00 para R$ 1,00 ou o campo `taxa_entrega` para R$ 0,00 diretamente no JSON.
+5. Envia a requisição alterada para o servidor.
+6. A API processa o pedido aceitando os valores modificados e encaminha a cobrança reduzida ao gateway de pagamento.
+7. O pagamento é aprovado no valor adulterado e o restaurante recebe a notificação para preparar a refeição.
 
-1. _(preencher)_
+**Impacto esperado:** prejuízo financeiro direto ao restaurante e à plataforma, quebra de integridade dos dados das transações e perda da confiabilidade nas regras do sistema.
 
-**Impacto esperado:** _(preencher)_
-
-**Categorias STRIDE relacionadas:** _(ex.: Tampering, Repudiation)_
+**Categorias STRIDE relacionadas:** Tampering e Elevation of Privilege.
 
 ---
 
