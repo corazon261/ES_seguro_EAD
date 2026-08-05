@@ -232,52 +232,53 @@ ameaça T07 da tabela STRIDE.)_
 
 ---
 
-### CA07 — _(rascunho — Cadastro de restaurante ou entregador falso)_
+### CA07 — Cadastro de restaurante ou entregador falso para coleta de dados e fraude
 
-> **A preencher.** Tema sugerido: um atacante cadastra um restaurante ou
-> entregador falso sem verificação adequada de identidade/habilitação, obtendo
-> acesso a dados de clientes (endereços, telefones) ou recebendo pedidos.
-> Relaciona-se a **Spoofing** e **Information Disclosure**.
+**Ator:** atacante externo (falso parceiro ou falso prestador de serviço).
 
-**Ator:** _(preencher)_
-
-**Objetivo:** _(preencher)_
+**Objetivo:** obter acesso ilícito a dados pessoais e de localização dos clientes ou receber repasses financeiros por pedidos que nunca serão entregues.
 
 **Condições necessárias:**
 
-- _(preencher — ex.: o cadastro de parceiros/entregadores não valida documentos ou habilitação)_
+- o processo de onboarding e cadastro de parceiros (restaurantes ou entregadores) permite a aprovação automática ou sem validação documental rigorosa (sem checagem de CNPJ, CPF, CNH ou fotos reais);
+- o aplicativo libera o endereço completo e telefone do cliente assim que o pedido é aceito pelo parceiro falso.
 
 **Fluxo de abuso:**
 
-1. _(preencher)_
+1. O atacante cria um perfil falso de restaurante (com cardápio e preços fictícios) ou de entregador utilizando dados/documentos gerados ou de terceiros.
+2. O sistema aprova o cadastro sem verificar a veracidade da documentação ou a existência física do estabelecimento/entregador.
+3. No caso de restaurante falso, o atacante recebe pedidos de clientes legítimos e obtém nome, telefone e endereço completo de entrega.
+4. No caso de entregador falso, o atacante aceita corridas apenas para ter acesso à localização exata e aos dados de contato da vítima.
+5. O atacante não prepara nem entrega os pedidos, utilizando os dados obtidos para aplicar golpes externos (ex.: cobranças falsas via PIX por fora da plataforma, engenharia social ou perseguição).
 
-**Impacto esperado:** _(preencher)_
+**Impacto esperado:** violação grave da privacidade e segurança física dos clientes, exposição de dados pessoais (PII), fraude financeira e grave dano à reputação da plataforma.
 
-**Categorias STRIDE relacionadas:** _(ex.: Spoofing, Information Disclosure)_
+**Categorias STRIDE relacionadas:** Spoofing, Information Disclosure e Elevation of Privilege.
 
 ---
 
-### CA08 — _(rascunho — Manipulação de avaliações)_
+### CA08 — Manipulação de avaliações e reputação de restaurantes
 
-> **A preencher.** Tema sugerido: um restaurante ou concorrente insere
-> avaliações falsas para inflar a própria nota ou derrubar a de um concorrente.
-> Relaciona-se a **Tampering** e **Repudiation**.
+**Ator:** restaurante concorrente ou usuário mal-intencionado (comprador de notas/avaliador falso).
 
-**Ator:** _(preencher)_
-
-**Objetivo:** _(preencher)_
+**Objetivo:** inflar artificialmente a nota de reputação do seu próprio estabelecimento ou difamar e derrubar a nota de restaurantes concorrentes no aplicativo.
 
 **Condições necessárias:**
 
-- _(preencher — ex.: avaliações aceitas sem vínculo com um pedido real concluído)_
+- o endpoint de submissão de avaliações e notas não valida se o usuário realmente realizou e concluiu um pedido no estabelecimento avaliado;
+- ausência de validação de limite de frequência ou de detecção de comportamentos anômalos (ex.: criação de contas em massa para avaliar o mesmo local).
 
 **Fluxo de abuso:**
 
-1. _(preencher)_
+1. O atacante cria diversas contas falsas (ou utiliza automações de botnet) na plataforma.
+2. Sem precisar efetuar a compra de uma refeição real, envia requisições diretamente para a API de avaliações.
+3. Para beneficiar seu próprio restaurante, envia consecutivas notas máximas (5 estrelas) acompanhadas de comentários elogiadores.
+4. Para prejudicar um concorrente direto, dispara uma onda de avaliações negativas (1 estrela) com relatos falsos sobre a qualidade da comida ou atrasos na entrega.
+5. O sistema recalcula a nota média dos restaurantes afetados sem verificar a legitimidade das transações.
 
-**Impacto esperado:** _(preencher)_
+**Impacto esperado:** quebra de integridade no sistema de reputação da plataforma, indução de clientes ao erro, concorrência desleal, prejuízo financeiro e perda de vendas para estabelecimentos legítimos.
 
-**Categorias STRIDE relacionadas:** _(ex.: Tampering, Repudiation)_
+**Categorias STRIDE relacionadas:** Tampering, Repudiation e Spoofing.
 
 ## 7. Considerações finais
 
