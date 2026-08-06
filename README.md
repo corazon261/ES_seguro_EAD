@@ -71,4 +71,4 @@ disponibilidade do serviço.
 - [x] 4. Visão geral da arquitetura ou fluxo — diagrama de contexto _(Luiz)_
 - [~] 5. Modelagem de ameaças com STRIDE — Spoofing/Elevation (Lucas), DoS (Renata) e Information Disclosure (Luiz) prontos; Tampering/Repudiation (Gustavo) pendentes
 - [~] 6. Casos de abuso — CA01 (Lucas), CA03 (Luiz) e CA04 CA06 (Renata) prontos; CA02 (Gustavo) pronto
-- [ ] 7. Considerações finais _(Renata)_ - Pronto
+- [ ] 7. Considerações finais _(Renata)_ Pronto
