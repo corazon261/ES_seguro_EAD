@@ -208,28 +208,29 @@ ameaça T07 da tabela STRIDE.)_
 
 ---
 
-### CA06 — _(rascunho — Fraude de cupons com múltiplas contas)_
+### CA06 — Fraude de cupons com múltiplas contas
 
-> **A preencher.** Tema sugerido: um usuário cria diversas contas falsas para
-> abusar repetidamente de cupons de "primeiro pedido"/descontos de boas-vindas.
-> Relaciona-se a **Spoofing** e ao abuso de regra de negócio.
+**Ator:** usuário mal-intencionado (cliente da plataforma).
 
-**Ator:** _(preencher)_
-
-**Objetivo:** _(preencher)_
+**Objetivo:** utilizar repetidamente cupons de "primeiro pedido" ou promoções destinadas a novos usuários, obtendo descontos indevidos.
 
 **Condições necessárias:**
 
-- _(preencher — ex.: cadastro não valida unicidade real de pessoa/dispositivo; cupom liberado por conta e não por CPF/cartão)_
+- o sistema concede cupons de boas-vindas apenas com base na criação de uma nova conta;
+- não há validação da identidade do usuário por CPF, cartão de pagamento, dispositivo ou outro identificador confiável;
+- não existe mecanismo para detectar a criação excessiva de contas pelo mesmo usuário.
 
 **Fluxo de abuso:**
 
-1. _(preencher)_
+1. O atacante cria uma nova conta utilizando outro endereço de e-mail ou número de telefone.
+2. O sistema libera automaticamente um cupom destinado ao primeiro pedido.
+3. O atacante realiza uma compra utilizando o desconto promocional.
+4. Após utilizar o cupom, cria outra conta e repete o processo diversas vezes.
+5. O abuso continua até que o sistema identifique a fraude ou os cupons sejam esgotados.
 
-**Impacto esperado:** _(preencher)_
+**Impacto esperado:** prejuízo financeiro para a plataforma e para os restaurantes participantes das promoções, uso indevido de campanhas promocionais, distorção dos indicadores de novos usuários e redução da efetividade das ações de marketing.
 
-**Categorias STRIDE relacionadas:** _(ex.: Spoofing)_
-
+**Categorias STRIDE relacionadas:** Spoofing e Repudiation.
 ---
 
 ### CA07 — Cadastro de restaurante ou entregador falso para coleta de dados e fraude
