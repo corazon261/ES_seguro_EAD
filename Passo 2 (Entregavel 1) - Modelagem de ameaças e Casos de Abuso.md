@@ -283,14 +283,12 @@ ameaça T07 da tabela STRIDE.)_
 
 ## 7. Considerações finais
 
-> **Responsável:** Renata. Estrutura abaixo para preencher com a síntese do grupo.
+**Ameaças mais preocupantes:** acesso indevido a contas de usuários, alteração de pedidos e valores, obtenção de privilégios administrativos, exposição de dados pessoais e indisponibilidade do sistema causada por ataques de negação de serviço.
 
-- **Ameaças mais preocupantes:** _(preencher — ex.: acesso indevido a contas,
-  alteração de pedidos/valores, obtenção de privilégios administrativos e
-  indisponibilidade em horários de pico.)_
-- **Ativos mais importantes:** _(preencher — ex.: credenciais, dados pessoais e
-  de pagamento, integridade dos pedidos, localização e disponibilidade.)_
-- **Tipos de abuso de maior impacto:** _(preencher)_
-- **Principais dificuldades encontradas pelo grupo:** _(preencher — ex.:
-  diferenciar uma ameaça genérica de uma situação concreta do sistema.)_
-- **(Opcional) Possíveis medidas de proteção:** _(preencher)_
+**Ativos mais importantes:** credenciais de acesso, dados pessoais, dados de pagamento, integridade dos pedidos, localização em tempo real, registros de auditoria (logs) e disponibilidade da plataforma.
+
+**Tipos de abuso de maior impacto:** sequestro de contas, manipulação de pedidos, coleta indevida de dados pessoais, ataques de negação de serviço, fraudes com cupons, falsificação de localização por entregadores, cadastro de parceiros falsos e manipulação de avaliações.
+
+**Principais dificuldades encontradas pelo grupo:** identificar ameaças específicas para cada categoria do STRIDE, diferenciar ameaças de casos de abuso, relacionar corretamente cada caso às categorias do STRIDE e manter a consistência entre os casos de abuso, a modelagem de ameaças e os diagramas.
+
+**Possíveis medidas de proteção:** utilização de autenticação multifator (MFA), limitação de tentativas de login, validação de autorização em todas as operações, criptografia de dados sensíveis, registros de auditoria, validação documental de parceiros, confirmação de entrega por código OTP, monitoramento de atividades suspeitas e mecanismos de proteção contra ataques de negação de serviço.
