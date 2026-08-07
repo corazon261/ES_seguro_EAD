@@ -62,11 +62,12 @@ disponibilidade do serviço.
 | [Passo 1 - Usuários, ativos e pontos de interação.md](<Passo 1 - Usuários, ativos e pontos de interação.md>) | Seções 3 (usuários, ativos e componentes) e 4 (visão geral da arquitetura e fluxo) |
 | [Passo 2 (Entregavel 1) - Modelagem de ameaças e Casos de Abuso.md](<Passo 2 (Entregavel 1) - Modelagem de ameaças e Casos de Abuso.md>) | **Entregável 1** — seções 5 (STRIDE), 6 (Casos de abuso) e 7 (Considerações finais) |
 | [docs/plano-de-trabalho.md](docs/plano-de-trabalho.md) | **Plano geral das 7 etapas + divisão entre os integrantes** |
+| [docs/etapa-2-riscos-nist.md](docs/etapa-2-riscos-nist.md) | **Etapa 2** — Análise, Priorização e Tratamento de Riscos (NIST CSF) |
 | [docs/divisao-de-tarefas.md](docs/divisao-de-tarefas.md) | Divisão de tarefas da Etapa 1 |
 | `diagramas/` | Diagramas e seus arquivos-fonte |
 
 ### Situação das etapas
 
 - [x] **Etapa 1** — Ameaças STRIDE (T01–T10) e Casos de Abuso (CA01–CA08) — **concluída**
-- [ ] **Etapa 2** — Análise, Priorização e Tratamento de Riscos (NIST CSF) — próximo foco
+- [~] **Etapa 2** — Riscos (NIST CSF): arcabouço + registro de riscos prontos; R01–R03 (Lucas) preenchidos; R04–R08 e seções finais com os responsáveis
 - [ ] Etapas 3 a 7 — ver [plano de trabalho](docs/plano-de-trabalho.md)
