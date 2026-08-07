@@ -8,10 +8,11 @@
 
 - **Nome do sistema:** RapidoFood — aplicativo de delivery de comida.
 - **Integrantes (Grupo 1):**
-  - Lucas Kaue Ribeiro Weber — _(usuário GitHub a preencher)_
-  - Gustavo Borges Arrussul Veiga — _(usuário GitHub a preencher)_
+  - Lucas Kaue Ribeiro Weber — @corazon261
+  - Gustavo Borges Arrussul Veiga — @GustavoArrussul
   - Luiz Hermano Bernardes Martins — _(usuário GitHub a preencher)_
-  - Renata Vassalo — @renatavassallo
+  - Renata Rodrigues Vassalo da Rosa — @renatavassallo
+  - Andre Luiz Montanha de Abreu — _(usuário GitHub a preencher)_
 - **Repositório:** https://github.com/corazon261/ES_seguro_EAD
 - **Justificativa:** Escolhemos um aplicativo de delivery porque ele reúne, em um
   único sistema, características que tornam a análise de segurança rica e
@@ -60,15 +61,12 @@ disponibilidade do serviço.
 | `README.md` | Seções 1 (Identificação) e 2 (Descrição) |
 | [Passo 1 - Usuários, ativos e pontos de interação.md](<Passo 1 - Usuários, ativos e pontos de interação.md>) | Seções 3 (usuários, ativos e componentes) e 4 (visão geral da arquitetura e fluxo) |
 | [Passo 2 (Entregavel 1) - Modelagem de ameaças e Casos de Abuso.md](<Passo 2 (Entregavel 1) - Modelagem de ameaças e Casos de Abuso.md>) | **Entregável 1** — seções 5 (STRIDE), 6 (Casos de abuso) e 7 (Considerações finais) |
-| [docs/divisao-de-tarefas.md](docs/divisao-de-tarefas.md) | Divisão de tarefas do grupo |
+| [docs/plano-de-trabalho.md](docs/plano-de-trabalho.md) | **Plano geral das 7 etapas + divisão entre os integrantes** |
+| [docs/divisao-de-tarefas.md](docs/divisao-de-tarefas.md) | Divisão de tarefas da Etapa 1 |
 | `diagramas/` | Diagramas e seus arquivos-fonte |
 
-### Entregável 1 — situação
+### Situação das etapas
 
-- [x] 1. Identificação do sistema
-- [x] 2. Descrição do sistema
-- [ ] 3. Usuários, ativos e pontos de interação _(Gustavo)_
-- [x] 4. Visão geral da arquitetura ou fluxo — diagrama de contexto _(Luiz)_
-- [~] 5. Modelagem de ameaças com STRIDE — Spoofing/Elevation (Lucas), DoS (Renata) e Information Disclosure (Luiz) prontos; Tampering/Repudiation (Gustavo) pendentes
-- [~] 6. Casos de abuso — CA01 (Lucas), CA03 (Luiz) e CA04 CA06 (Renata) prontos; CA02 (Gustavo) pronto
-- [ ] 7. Considerações finais _(Renata)_ Pronto
+- [x] **Etapa 1** — Ameaças STRIDE (T01–T10) e Casos de Abuso (CA01–CA08) — **concluída**
+- [ ] **Etapa 2** — Análise, Priorização e Tratamento de Riscos (NIST CSF) — próximo foco
+- [ ] Etapas 3 a 7 — ver [plano de trabalho](docs/plano-de-trabalho.md)
