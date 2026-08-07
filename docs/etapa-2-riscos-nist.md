@@ -91,7 +91,14 @@ já descritos no [Entregável 1](<../Passo 2 (Entregavel 1) - Modelagem de amea�
 - **Afetados:** clientes (pagam sem receber) e plataforma (repasses e reembolsos).
 - **Nível (Alto):** plausível e com prejuízo relevante, ainda que localizado.
 
-### R04 a R08 — _(a preencher pelos responsáveis)_
+### R08 — Sobrecarga da API/autenticação (Denial of Service) — *Renata*
+
+- **Probabilidade (2):** o cenário é possível, pois um atacante pode enviar um volume anormal de requisições para a API ou realizar muitas tentativas de login simultâneas. Porém, o ataque depende de volume suficiente para sobrecarregar os recursos do sistema.
+- **Impacto (3):** a indisponibilidade da API ou do serviço de autenticação pode impedir clientes, restaurantes e entregadores de utilizar a plataforma normalmente, causando prejuízo relevante à operação.
+- **Afetados:** clientes, restaurantes, entregadores e a própria plataforma.
+- **Nível (Médio):** a pontuação é 2 × 3 = 6, classificando o risco como Médio.
+
+  ###  R04 — _(a preencher pelos responsáveis)_
 
 > Cada dono deve seguir o modelo acima: justificar probabilidade, impacto, quem é
 > afetado e por que o nível representa o contexto.
