@@ -152,7 +152,7 @@ Para cada risco, escolher uma estratégia principal:
 | R05 | _(preencher)_ | | | | | |
 | R06 | _(preencher)_ | | | | | |
 | R07 | _(preencher)_ | | | | | |
-| R08 | _(preencher)_ | | | | | |
+| R08   |       X       |     X    |    X    |    X   |    X    |         |
 
 > Analisem cada relação — não marquem todas as funções automaticamente.
 
