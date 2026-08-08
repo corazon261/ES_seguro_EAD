@@ -182,7 +182,8 @@ que reduzem vários riscos, custo/complexidade e urgência.
 | R01 | Crítico (12) | Médio (≈6) | MFA obrigatório e monitoramento de login ativos e testados |
 | R02 | Alto (8) | Baixo–Médio (≈4) | Autorização server-side coberta por testes automatizados |
 | R03 | Alto (9) | Médio (≈4–6) | OTP de entrega adotado e detecção de mock location em produção |
-| R04–R08 | _(preencher)_ | _(preencher)_ | _(preencher)_ |
+| R08 | Médio (6) | Baixo (≈3) | Rate limiting, bloqueio de requisições anormais e monitoramento de tráfego ativos e testados |
+| R04 | _(preencher)_ | _(preencher)_ | _(preencher)_ |
 
 > O risco residual é uma **estimativa**: a redução só se confirma após
 > implementação, testes e evidências.
