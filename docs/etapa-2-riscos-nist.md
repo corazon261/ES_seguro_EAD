@@ -163,7 +163,8 @@ Para cada risco, escolher uma estratégia principal:
 | R01 | Reduzir | Autenticação multifator (MFA); limite de tentativas + bloqueio temporário; alerta de login em novo dispositivo | Protect, Detect, Respond | Desenvolvimento e Infra | Testes de login com/sem MFA; logs de tentativas; simulação de conta comprometida |
 | R02 | Reduzir/Evitar | Autorização verificada no servidor (RBAC) em todos os endpoints; negar por padrão; testes de autorização por perfil | Protect, Detect, Govern | Desenvolvimento | Testes de acesso a endpoints admin com usuário comum (deve ser negado e registrado) |
 | R03 | Reduzir | Código de confirmação de entrega (OTP) informado pelo cliente; checagem de coerência rota/tempo; detecção de *mock location* | Protect, Detect, Respond | Desenvolvimento e Operações | Registro de OTP por entrega; relatório de entregas sem OTP; testes com app de fake GPS |
-| R04–R08 | _(preencher)_ | _(controles específicos e verificáveis)_ | _(funções)_ | _(responsáveis)_ | _(evidências)_ |
+| R08 | Reduzir | Rate limiting por IP e por conta; bloqueio temporário após volume anormal de requisições; monitoramento e alertas de tráfego | Protect, Detect, Respond | Desenvolvimento e Operações | Testes de limite de requisições; registro de bloqueios; verificação dos alertas de tráfego |
+| R04 | _(preencher)_ | _(controles específicos e verificáveis)_ | _(funções)_ | _(responsáveis)_ | _(evidências)_ |
 
 > Controles devem ser **específicos e observáveis**. Evitem "aumentar a
 > segurança", "usar criptografia", "aplicar o NIST" sem dizer onde, como e quem
