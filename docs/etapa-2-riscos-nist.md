@@ -50,8 +50,8 @@ já descritos no [Entregável 1](<../Passo 2 (Entregavel 1) - Modelagem de amea�
 | R01 | Spoofing (T01, CA01) | Um atacante acessa a conta de um usuário e realiza operações em seu nome | Credenciais reutilizadas/vazadas, ausência de MFA e de limite de tentativas de login | 3 | 4 | 12 | **Crítico** |
 | R02 | Elevation of Privilege (T08, CA01) | Um usuário comum obtém permissões de administrador | Falha de controle de acesso; autorização não verificada no servidor | 2 | 4 | 8 | **Alto** |
 | R03 | Spoofing (T07, CA05) | Um entregador confirma entregas que não realizou falsificando o GPS | Confiança exclusiva na localização do dispositivo; sem confirmação de entrega (OTP) | 3 | 3 | 9 | **Alto** |
-| R04 | Tampering (T02, CA02) | Um cliente altera o valor/itens do pedido antes do pagamento | Cálculo/validação de preços no lado do cliente; API não revalida valores | 3 | 3 | 9 | **Alto** _(proposto — Gustavo revisa/justifica)_ |
-| R05 | Repudiation (T03) | Um entregador/cliente nega ter entregue/recebido o pedido | Ausência de código de confirmação (OTP) e de logs auditáveis com timestamp | 3 | 2 | 6 | **Médio** _(proposto — Gustavo revisa/justifica)_ |
+| R04 | Tampering (T02, CA02) | Um cliente altera o valor/itens do pedido antes do pagamento | Cálculo/validação de preços no lado do cliente; API não revalida valores | 3 | 3 | 9 | **Alto** |
+| R05 | Repudiation (T03) | Um entregador/cliente nega ter entregue/recebido o pedido | Ausência de código de confirmação (OTP) e de logs auditáveis com timestamp | 3 | 2 | 6 | **Médio** |
 | R06 | Information Disclosure (T04, CA03) | Um usuário acessa pedidos/dados de terceiros trocando o identificador na requisição | Falta de verificação de propriedade do objeto (IDOR / broken access control) | 3 | 4 | 12 | **Crítico** _(proposto — Luiz revisa/justifica)_ |
 | R07 | Information Disclosure (T10) | Dados do cliente permanecem acessíveis ao entregador após a entrega | Ausência de mascaramento e de expiração do acesso aos dados | 3 | 3 | 9 | **Alto** _(proposto — Luiz revisa/justifica)_ |
 | R08 | Denial of Service (T05, T06, CA04) | Sobrecarga da API/autenticação torna o serviço indisponível | Ausência de rate limiting e de proteção contra volume anômalo de requisições | 2 | 3 | 6 | **Médio** _(proposto — Renata revisa/justifica)_ |
@@ -90,6 +90,20 @@ já descritos no [Entregável 1](<../Passo 2 (Entregavel 1) - Modelagem de amea�
   entrega, não sistêmico.
 - **Afetados:** clientes (pagam sem receber) e plataforma (repasses e reembolsos).
 - **Nível (Alto):** plausível e com prejuízo relevante, ainda que localizado.
+
+### R04 — Alteração de valores no carrinho e pedido (Tampering) — _Gustavo_
+
+- **Probabilidade (3):** ferramentas de interceptação de requisições HTTP/HTTPS (como Burp Suite) são amplamente documentadas e acessíveis; como a requisição parte do cliente, a tentativa de adulterar parâmetros de preços ou taxas no payload é plausível no uso comum.
+- **Impacto (3):** a alteração de preços unitários ou zeramento de taxas de entrega gera prejuízo financeiro direto aos restaurantes e à plataforma, além de causar inconsistências contábeis nas transações.
+- **Afetados:** restaurantes parceiros e a plataforma (prejuízo financeiro direto e quebra de integridade das transações).
+- **Nível (Alto):** a facilidade de interceptação combinada ao prejuízo financeiro direto justifica a classificação de nível Alto (3 × 3 = 9).
+
+### R05 — Contestação indevida de entrega/recebimento (Repudiation) — _Gustavo_
+
+- **Probabilidade (3):** sem validação em duas pontas, é frequente que clientes declarem não ter recebido pedidos para obter reembolso ou que entregadores marquem pedidos como entregues sem concluí-los.
+- **Impacto (2):** causa atritos operacionais, desgaste de confiabilidade e custos de reembolso/repasse, mas com prejuízo financeiro restrito a transações individuais (não afeta a infraestrutura nem dados de terceiros).
+- **Afetados:** clientes, entregadores e o suporte operacional da plataforma.
+- **Nível (Médio):** ocorrência comum em aplicativos de delivery, porém com impacto pontual por evento, resultando em nível Médio (3 × 2 = 6).
 
 ### R08 — Sobrecarga da API/autenticação (Denial of Service) — *Renata*
 
