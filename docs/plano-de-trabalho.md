@@ -14,7 +14,7 @@
 | --- | --- | --- |
 | Lucas Kaue Ribeiro Weber | @corazon261 | ✅ |
 | Gustavo Borges Arrussul Veiga | @GustavoArrussul | ✅ |
-| Luiz Hermano Bernardes Martins | _(preencher)_ | ✅ |
+| Luiz Hermano Bernardes Martins | @LuizHerm | ✅ |
 | Renata Rodrigues Vassalo da Rosa | @renatavassallo | ✅ |
 | **Andre Luiz Montanha de Abreu** | _(preencher)_ | ⬜ **ainda não — prioridade** |
 

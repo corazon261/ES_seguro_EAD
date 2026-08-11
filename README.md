@@ -10,7 +10,7 @@
 - **Integrantes (Grupo 1):**
   - Lucas Kaue Ribeiro Weber — @corazon261
   - Gustavo Borges Arrussul Veiga — @GustavoArrussul
-  - Luiz Hermano Bernardes Martins — _(usuário GitHub a preencher)_
+  - Luiz Hermano Bernardes Martins — @LuizHerm
   - Renata Rodrigues Vassalo da Rosa — @renatavassallo
   - Andre Luiz Montanha de Abreu — _(usuário GitHub a preencher)_
 - **Repositório:** https://github.com/corazon261/ES_seguro_EAD
