@@ -24,10 +24,11 @@ segurança identificados nas etapas anteriores.
 ### 1.1 Risco e requisito relacionados
 
 | Campo | Conteúdo |
+| Campo | Conteúdo |
 |---|---|
-| Risco relacionado | *(preencher — Gustavo)* |
-| Requisito relacionado | *(preencher — Gustavo)* |
-| Problema de segurança tratado | *(preencher — Gustavo)* |
+| Risco relacionado | **R04 — Alteração de valores no carrinho e pedido (Tampering)** (Alto, 9), originado da ameaça T02 e do caso de abuso CA02. |
+| Requisito relacionado | O backend (`API Gateway`/`Motor de Pedidos`) deve recalcular obrigatoriamente o preço total de todos os itens e taxas no lado do servidor antes de enviar a transação ao gateway de pagamento, rejeitando payloads com divergência de valores. |
+| Problema de segurança tratado | A aplicação confiava nos valores monetários (como preço unitário ou taxa de entrega) enviados no payload da requisição pelo cliente. Um atacante usando ferramentas de interceptação (ex: Burp Suite) podia adulterar os valores para realizar compras por centavos ou com desconto indevido. |
 
 ### 1.2 Referência da OWASP
 
@@ -40,14 +41,12 @@ segurança identificados nas etapas anteriores.
 
 ### 1.3 Testes definidos antes da implementação
 
-**Responsável: Gustavo**
-
-Os testes deverão ser definidos antes da apresentação da implementação.
+Os testes foram definidos antes da apresentação da implementação para garantir a verificação dos limites do controle.
 
 | ID | Entrada ou ação | Tipo de teste | Resultado seguro esperado |
 |---|---|---|---|
-| TS01 | *(preencher — Gustavo)* | Caso de uso válido | *(preencher — Gustavo)* |
-| TS02 | *(preencher — Gustavo)* | Caso malicioso, inválido ou não autorizado | *(preencher — Gustavo)* |
+| TS01 | Cliente realiza requisição `POST /api/v1/pedidos/checkout` enviando itens válidos e o valor total recalculado corretamente de acordo com a tabela do banco de dados. | Caso de uso válido | A API revalida todos os preços no servidor, confirma que o valor calculado pelo backend é idêntico ao do payload, cria o pedido com status `PENDENTE` e encaminha a transação ao gateway de pagamento (`201 Created`). |
+| TS02 | Cliente intercepta a requisição e altera o campo `preco_unitario` de R$ 50,00 para R$ 1,00 no JSON enviado para a API. | Caso malicioso, inválido ou não autorizado | O backend identifica a divergência entre o valor enviado no payload e o valor real do catálogo no banco de dados. A requisição é rejeitada com erro `400 Bad Request`, o pedido não é criado e o evento de adulteração é registrado nos logs de segurança. |
 
 ### 1.4 Implementação, pseudocódigo ou descrição
 
