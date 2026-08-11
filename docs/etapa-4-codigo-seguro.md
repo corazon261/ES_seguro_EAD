@@ -74,9 +74,9 @@ segurança identificados nas etapas anteriores.
 
 | Campo | Conteúdo |
 |---|---|
-| Risco relacionado | *(preencher — Luiz)* |
-| Requisito relacionado | *(preencher — Luiz)* |
-| Problema de segurança tratado | *(preencher — Luiz)* |
+| Risco relacionado | **R06 — Exposição de dados de terceiros por falha de autorização** (Crítico, 12), originado da ameaça T04 e do caso de abuso CA03. |
+| Requisito relacionado | Todo endpoint que devolve dados de um pedido deve confirmar, no servidor, que o pedido pertence ao usuário autenticado antes de responder. |
+| Problema de segurança tratado | A API identifica o pedido apenas pelo valor recebido na requisição e confia nesse valor. Como não compara o dono do pedido com o usuário do token, qualquer cliente autenticado lê pedidos alheios trocando o identificador — falha de autorização a nível de objeto (IDOR). |
 
 ### 2.2 Referência da OWASP
 
@@ -95,8 +95,13 @@ Os testes deverão ser definidos antes da apresentação da implementação.
 
 | ID | Entrada ou ação | Tipo de teste | Resultado seguro esperado |
 |---|---|---|---|
-| TS03 | *(preencher — Luiz)* | Caso de uso válido | *(preencher — Luiz)* |
-| TS04 | *(preencher — Luiz)* | Caso malicioso, inválido ou não autorizado | *(preencher — Luiz)* |
+| TS03 | Cliente autenticado consulta `GET /api/v1/pedidos/{id}` informando o identificador de um pedido **feito por ele mesmo** | Caso de uso válido | A API responde `200 OK` com os dados completos do pedido (itens, valores, endereço e status). O acesso é registrado no log de auditoria. |
+| TS04 | O mesmo cliente autenticado repete a chamada trocando o identificador pelo de um pedido **de outro usuário** | Caso malicioso, inválido ou não autorizado | A API responde `403 Forbidden` sem devolver nenhum dado do pedido, nem mesmo em mensagem de erro. A tentativa é registrada com o usuário, o identificador solicitado e o horário, e alimenta o alerta de acesso indevido previsto no plano de tratamento do R06. |
+
+> Observação sobre o TS04: a resposta não deve diferenciar "pedido inexistente"
+> de "pedido de outro usuário". Se os códigos ou os tempos de resposta forem
+> diferentes, o atacante consegue descobrir quais identificadores existem mesmo
+> sem ler os dados, o que reabre parcialmente a enumeração descrita no CA03.
 
 ### 2.4 Implementação, pseudocódigo ou descrição
 
