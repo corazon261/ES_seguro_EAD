@@ -249,9 +249,20 @@ Para cada risco, escolher uma estratégia principal:
 
 ## 11. Ordem inicial de implementação
 
-_(Responsável: Gustavo.)_ Definir e justificar a ordem de implementação dos
-controles, considerando riscos críticos/altos, dependências técnicas, controles
-que reduzem vários riscos, custo/complexidade e urgência.
+A definição da sequência de implementação dos controles do **RapidoFood** foi estruturada priorizando o nível de risco (Crítico e Alto), a facilidade/custo de implementação técnica e o bloqueio de vulnerabilidades que servem de porta de entrada para ataques encadeados:
+
+1. **1º — R04 (Validação Server-Side de Preços no Backend):**
+   - *Justificativa:* Apresenta urgência financeira e baixo custo/complexidade de implementação técnica no servidor backend. Validar os preços no servidor elimina imediatamente fraudes diretas de adulteração no carrinho sem depender da alteração de fluxos operacionais de rua ou regras complexas de interface.
+2. **2º — R01 (Autenticação Forte - MFA e Rate Limiting no Login):**
+   - *Justificativa:* Risco Crítico (Nota 12). Mitiga o sequestro de contas e o *credential stuffing*, protegendo a base de clientes e seus dados sensíveis (endereços e cartões salvos), servindo de base de segurança para toda a plataforma.
+3. **3º — R06 (Controle de Acesso a Nível de Objeto - IDOR):**
+   - *Justificativa:* Risco Crítico (Nota 12). A implementação de verificações de autorização *server-side* em endpoints de pedidos previne vazamentos em massa de PII (dados pessoais) e sanções graves da LGPD.
+4. **4º — R02 (Controle de Acesso Baseado em Perfis - RBAC):**
+   - *Justificativa:* Risco Alto (Nota 8). Evita que usuários comuns escalem privilégios para perfis administrativos e acessem recursos restritos no sistema.
+5. **5º — R03 e R05 (Validação de Entrega via OTP e Logs Auditáveis com Timestamp):**
+   - *Justificativa:* Riscos Alto e Médio. A adoção de código OTP no momento da entrega reduz simultaneamente o risco de GPS Spoofing (R03) e o repúdio de entregas (R05), dependendo de atualização simultânea nas aplicações dos clientes e entregadores.
+6. **6º — R07 e R08 (Mascaramento de Dados Pós-Entrega e Rate Limiting Geral):**
+   - *Justificativa:* Trata a exposição residual de dados do cliente após a conclusão da entrega (R07) e garante a resiliência e estabilidade da API contra picos ou investidas de negação de serviço (R08).
 
 ## 12. Estimativa do risco residual
 
