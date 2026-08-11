@@ -98,6 +98,22 @@ ser executados antes da implantação.
 
 Considerar os testes definidos na Etapa 4.
 
+Nesta etapa do pipeline, todo *commit* enviado ao repositório dispararia
+automaticamente três verificações, executadas em sequência e sem intervenção
+manual:
+
+1. **Testes de segurança automatizados** — a suíte definida na Etapa 4 roda
+   contra uma instância de teste da API. Os casos TS03 e TS04 são os mais
+   relevantes: o TS03 confirma que o dono do pedido continua conseguindo
+   consultá-lo, e o TS04 confirma que a consulta ao pedido de outro usuário
+   recebe `403 Forbidden`. O TS04 funciona como teste de regressão do R06 — se
+   alguém reintroduzir a falha de autorização, ele falha e barra a entrega.
+2. **Análise estática de código (SAST)** — varredura do código em busca de
+   padrões conhecidos de vulnerabilidade, com atenção às consultas que recebem
+   identificadores vindos da requisição sem verificação de propriedade.
+3. **Verificação de dependências** — checagem das bibliotecas usadas contra
+   bases públicas de vulnerabilidades conhecidas.
+
 **Evidências produzidas:**
 
 - resultados dos testes;
@@ -106,7 +122,15 @@ Considerar os testes definidos na Etapa 4.
 
 **Condição para continuar:**
 
-*(preencher — Luiz)*
+O pipeline só avança para a etapa seguinte se **todos os testes de segurança
+passarem** e se a análise estática **não apontar nenhum achado de severidade
+alta ou crítica**. Qualquer falha interrompe a esteira, e a versão não segue
+para implantação.
+
+A reprovação não pode ser ignorada nem contornada manualmente: se a equipe
+decidir seguir mesmo assim, essa exceção precisa ser registrada com
+justificativa e aprovação de um responsável, conforme a função *Govern* do NIST
+CSF. Um portão de qualidade que qualquer pessoa pode pular não protege nada.
 
 ---
 
@@ -186,7 +210,7 @@ do pipeline.
 | Condição | Motivo | Ação necessária |
 |---|---|---|
 | *(preencher — Gustavo)* | *(preencher — Gustavo)* | *(preencher — Gustavo)* |
-| *(preencher — Luiz)* | *(preencher — Luiz)* | *(preencher — Luiz)* |
+| Teste de autorização reprovado (TS04): a API devolveu dados de um pedido para quem não é o dono, em vez de `403 Forbidden` | A falha de autorização a nível de objeto é a origem do R06, o risco crítico do registro. Publicar nesse estado exporia dados pessoais de todos os clientes e configuraria tratamento irregular perante a LGPD | Interromper o pipeline e bloquear a implantação. Corrigir a verificação de propriedade do objeto no servidor, rodar a suíte novamente e só liberar após o TS04 passar. A exceção não pode ser concedida por quem escreveu o código |
 | *(preencher — Lucas)* | *(preencher — Lucas)* | *(preencher — Lucas)* |
 
 Podem ser consideradas condições como:
