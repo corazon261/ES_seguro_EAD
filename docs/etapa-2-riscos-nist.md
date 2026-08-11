@@ -52,8 +52,8 @@ já descritos no [Entregável 1](<../Passo 2 (Entregavel 1) - Modelagem de amea�
 | R03 | Spoofing (T07, CA05) | Um entregador confirma entregas que não realizou falsificando o GPS | Confiança exclusiva na localização do dispositivo; sem confirmação de entrega (OTP) | 3 | 3 | 9 | **Alto** |
 | R04 | Tampering (T02, CA02) | Um cliente altera o valor/itens do pedido antes do pagamento | Cálculo/validação de preços no lado do cliente; API não revalida valores | 3 | 3 | 9 | **Alto** |
 | R05 | Repudiation (T03) | Um entregador/cliente nega ter entregue/recebido o pedido | Ausência de código de confirmação (OTP) e de logs auditáveis com timestamp | 3 | 2 | 6 | **Médio** |
-| R06 | Information Disclosure (T04, CA03) | Um usuário acessa pedidos/dados de terceiros trocando o identificador na requisição | Falta de verificação de propriedade do objeto (IDOR / broken access control) | 3 | 4 | 12 | **Crítico** _(proposto — Luiz revisa/justifica)_ |
-| R07 | Information Disclosure (T10) | Dados do cliente permanecem acessíveis ao entregador após a entrega | Ausência de mascaramento e de expiração do acesso aos dados | 3 | 3 | 9 | **Alto** _(proposto — Luiz revisa/justifica)_ |
+| R06 | Information Disclosure (T04, CA03) | Um usuário acessa pedidos/dados de terceiros trocando o identificador na requisição | Falta de verificação de propriedade do objeto (IDOR / broken access control) | 3 | 4 | 12 | **Crítico** |
+| R07 | Information Disclosure (T10) | Dados do cliente permanecem acessíveis ao entregador após a entrega | Ausência de mascaramento e de expiração do acesso aos dados | 3 | 3 | 9 | **Alto** |
 | R08 | Denial of Service (T05, T06, CA04) | Sobrecarga da API/autenticação torna o serviço indisponível | Ausência de rate limiting e de proteção contra volume anômalo de requisições | 2 | 3 | 6 | **Médio** _(proposto — Renata revisa/justifica)_ |
 
 > Riscos opcionais (dos casos extras) que o grupo pode acrescentar: fraude de
@@ -104,6 +104,47 @@ já descritos no [Entregável 1](<../Passo 2 (Entregavel 1) - Modelagem de amea�
 - **Impacto (2):** causa atritos operacionais, desgaste de confiabilidade e custos de reembolso/repasse, mas com prejuízo financeiro restrito a transações individuais (não afeta a infraestrutura nem dados de terceiros).
 - **Afetados:** clientes, entregadores e o suporte operacional da plataforma.
 - **Nível (Médio):** ocorrência comum em aplicativos de delivery, porém com impacto pontual por evento, resultando em nível Médio (3 × 2 = 6).
+
+### R06 — Exposição de dados de terceiros por falha de autorização (Information Disclosure) — _Luiz_
+
+- **Probabilidade (3):** a exploração não exige ferramenta sofisticada nem
+  privilégio especial — basta um cliente legítimo observar o identificador do
+  próprio pedido na requisição e substituí-lo por outro. Falhas de autorização a
+  nível de objeto estão entre as mais frequentes em APIs REST, e o uso de
+  identificadores sequenciais torna a enumeração trivial. Não recebe 4 porque
+  ainda depende de o atacante inspecionar o tráfego da aplicação, um passo
+  técnico que o usuário comum não executa por acaso.
+- **Impacto (4):** a falha não expõe um registro isolado, e sim toda a base de
+  pedidos — nome, telefone, endereço de entrega, itens e valores de qualquer
+  cliente. Por ser automatizável, atinge muitos usuários de uma só vez e
+  configura tratamento irregular de dados pessoais perante a LGPD, com risco de
+  sanção da ANPD. A exposição é irreversível: uma vez copiados, os dados não
+  podem ser recuperados.
+- **Afetados:** todos os clientes da plataforma (dados pessoais e endereços
+  residenciais), além da própria empresa nas esferas jurídica e reputacional.
+- **Nível (Crítico):** 3 × 4 = 12. A combinação de exploração simples com
+  exposição em massa de dados pessoais justifica a classificação máxima, no mesmo
+  patamar do R01. Origem: ameaça T04 e caso de abuso CA03.
+
+### R07 — Acesso persistente do entregador aos dados do cliente (Information Disclosure) — _Luiz_
+
+- **Probabilidade (3):** aqui não há ataque a ser executado — a exposição é o
+  comportamento padrão do sistema, já que o aplicativo do entregador mantém nome,
+  telefone e endereço visíveis após a conclusão da entrega. O que depende de
+  intenção é o uso indevido dessa informação, e com uma base grande de
+  entregadores esse comportamento é plausível em situações comuns de operação.
+- **Impacto (3):** o alcance é menor que o do R06, pois cada entregador só
+  enxerga os clientes que atendeu, mas a consequência é grave no plano
+  individual: permite contato não solicitado, perseguição e assédio, atingindo a
+  segurança física da pessoa. Há também violação do princípio da finalidade
+  previsto na LGPD, já que o dado permanece acessível depois de cumprido o
+  propósito que justificou a coleta.
+- **Afetados:** clientes atendidos por cada entregador, com risco maior para
+  pessoas em situação de vulnerabilidade; e a plataforma, responsável legal pelo
+  tratamento dos dados.
+- **Nível (Alto):** 3 × 3 = 9. Não chega a Crítico porque não permite coleta em
+  massa como o R06, mas a gravidade individual e a natureza contínua da exposição
+  impedem classificação menor. Origem: ameaça T10.
 
 ### R08 — Sobrecarga da API/autenticação (Denial of Service) — *Renata*
 
@@ -164,9 +205,27 @@ Para cada risco, escolher uma estratégia principal:
 | R03 |  | X | X | X | X |  |
 | R04 | X | X | X | X | X |  |
 | R05 | X |  | X | X | X | X |
-| R06 | _(preencher)_ | | | | | |
-| R07 | _(preencher)_ | | | | | |
+| R06 | X | X | X | X | X |  |
+| R07 | X | X | X |  |  |  |
 | R08   |       X       |     X    |    X    |    X   |    X    |         |
+
+**Justificativa do mapeamento do R06 e do R07** (_Luiz_):
+
+- **R06** — *Govern*: exige política de autorização obrigatória para todo acesso
+  a dados de pedidos. *Identify*: depende de inventariar quais endpoints
+  devolvem dados pessoais. *Protect*: é onde entra a verificação de propriedade
+  do objeto no servidor. *Detect*: a enumeração de identificadores gera um padrão
+  de acesso anômalo que pode ser monitorado. *Respond*: um vazamento confirmado
+  exige comunicação aos titulares e à ANPD, conforme a LGPD. **Não marca
+  *Recover*** porque dado pessoal exposto não se recupera — uma vez copiado, não
+  há restauração possível, apenas contenção.
+- **R07** — *Govern*: define por quanto tempo o entregador pode ver os dados e
+  qual a finalidade. *Identify*: mapeia quais campos o aplicativo do entregador
+  realmente precisa. *Protect*: mascaramento e expiração do acesso. **Não marca
+  *Detect*, *Respond* nem *Recover***: o problema não é um evento a ser detectado,
+  e sim uma característica permanente do sistema — enquanto o acesso não expirar,
+  não há incidente a identificar, responder ou recuperar. A correção é de
+  projeto, não de monitoramento.
 
 > Analisem cada relação — não marquem todas as funções automaticamente.
 
@@ -179,6 +238,8 @@ Para cada risco, escolher uma estratégia principal:
 | R03 | Reduzir | Código de confirmação de entrega (OTP) informado pelo cliente; checagem de coerência rota/tempo; detecção de *mock location* | Protect, Detect, Respond | Desenvolvimento e Operações | Registro de OTP por entrega; relatório de entregas sem OTP; testes com app de fake GPS |
 | R04 | Reduzir / Evitar | Recálculo e validação obrigatória de todos os itens, preços e taxas no backend (`API Gateway`/`Pedidos`) antes de enviar ao gateway de pagamento; rejeição de requisições com divergência de valores. | Protect, Detect, Respond, Govern, Identify | Desenvolvimento e Backend | Testes automatizados de API enviando payloads com `preco_unitario` alterado (a API deve retornar erro HTTP `400 Bad Request`); logs auditáveis de bloqueio. |
 | R05 | Reduzir | Geração de código de validação único (OTP) no app do cliente a ser digitado pelo entregador no ato da entrega; criação de logs de transação imutáveis com *timestamp* e geolocalização. | Protect, Detect, Respond, Recover, Govern | Desenvolvimento e Operações | Verificação no banco de dados da obrigatoriedade do campo `otp_verified = true` para alteração de status do pedido para `CONCLUIDO`; relatórios de suporte. |
+| R06 | Reduzir | Verificação de propriedade do objeto no servidor em todo endpoint que devolve pedido (comparar o dono do pedido com o usuário do token, negando por padrão); substituição do identificador sequencial por UUID; limite de consultas de pedido por conta por minuto; alerta quando uma conta consulta pedidos que não são dela | Govern, Identify, Protect, Detect, Respond | Desenvolvimento (backend) e Segurança | Teste automatizado que consulta o pedido de outro usuário e exige resposta `403 Forbidden`; revisão de que nenhum endpoint de pedido aceita ID sem checagem de dono; log das tentativas negadas; simulação de enumeração sequencial disparando o alerta |
+| R07 | Reduzir | Mascaramento do telefone do cliente (chamada e chat via número intermediário da plataforma); exibição do endereço completo apenas entre o aceite e a confirmação da entrega; revogação automática do acesso aos dados assim que o pedido é concluído, mantendo no histórico apenas data, valor e região | Govern, Identify, Protect | Desenvolvimento (aplicativo do entregador) e Jurídico/DPO | Consulta ao histórico do entregador após a entrega deve retornar os dados mascarados; teste de revogação verificando que a API nega os dados completos para pedido concluído; conferência de que o número real do cliente não trafega para o dispositivo do entregador |
 | R08 | Reduzir | Rate limiting por IP e por conta; bloqueio temporário após volume anormal de requisições; monitoramento e alertas de tráfego | Protect, Detect, Respond | Desenvolvimento e Operações | Testes de limite de requisições; registro de bloqueios; verificação dos alertas de tráfego |
 | R04 | _(preencher)_ | _(controles específicos e verificáveis)_ | _(funções)_ | _(responsáveis)_ | _(evidências)_ |
 
