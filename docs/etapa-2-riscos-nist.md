@@ -162,8 +162,8 @@ Para cada risco, escolher uma estratégia principal:
 | R01 | X | X | X | X | X |  |
 | R02 | X |  | X | X |  |  |
 | R03 |  | X | X | X | X |  |
-| R04 | _(preencher)_ | | | | | |
-| R05 | _(preencher)_ | | | | | |
+| R04 | X | X | X | X | X |  |
+| R05 | X |  | X | X | X | X |
 | R06 | _(preencher)_ | | | | | |
 | R07 | _(preencher)_ | | | | | |
 | R08   |       X       |     X    |    X    |    X   |    X    |         |
@@ -177,6 +177,8 @@ Para cada risco, escolher uma estratégia principal:
 | R01 | Reduzir | Autenticação multifator (MFA); limite de tentativas + bloqueio temporário; alerta de login em novo dispositivo | Protect, Detect, Respond | Desenvolvimento e Infra | Testes de login com/sem MFA; logs de tentativas; simulação de conta comprometida |
 | R02 | Reduzir/Evitar | Autorização verificada no servidor (RBAC) em todos os endpoints; negar por padrão; testes de autorização por perfil | Protect, Detect, Govern | Desenvolvimento | Testes de acesso a endpoints admin com usuário comum (deve ser negado e registrado) |
 | R03 | Reduzir | Código de confirmação de entrega (OTP) informado pelo cliente; checagem de coerência rota/tempo; detecção de *mock location* | Protect, Detect, Respond | Desenvolvimento e Operações | Registro de OTP por entrega; relatório de entregas sem OTP; testes com app de fake GPS |
+| R04 | Reduzir / Evitar | Recálculo e validação obrigatória de todos os itens, preços e taxas no backend (`API Gateway`/`Pedidos`) antes de enviar ao gateway de pagamento; rejeição de requisições com divergência de valores. | Protect, Detect, Respond, Govern, Identify | Desenvolvimento e Backend | Testes automatizados de API enviando payloads com `preco_unitario` alterado (a API deve retornar erro HTTP `400 Bad Request`); logs auditáveis de bloqueio. |
+| R05 | Reduzir | Geração de código de validação único (OTP) no app do cliente a ser digitado pelo entregador no ato da entrega; criação de logs de transação imutáveis com *timestamp* e geolocalização. | Protect, Detect, Respond, Recover, Govern | Desenvolvimento e Operações | Verificação no banco de dados da obrigatoriedade do campo `otp_verified = true` para alteração de status do pedido para `CONCLUIDO`; relatórios de suporte. |
 | R08 | Reduzir | Rate limiting por IP e por conta; bloqueio temporário após volume anormal de requisições; monitoramento e alertas de tráfego | Protect, Detect, Respond | Desenvolvimento e Operações | Testes de limite de requisições; registro de bloqueios; verificação dos alertas de tráfego |
 | R04 | _(preencher)_ | _(controles específicos e verificáveis)_ | _(funções)_ | _(responsáveis)_ | _(evidências)_ |
 
