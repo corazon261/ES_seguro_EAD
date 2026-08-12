@@ -233,9 +233,9 @@ Organização:
 ```
 evidencias/
 └── etapa-5/
-    ├── A01
-    ├── A02
-    ├── A03
+    ├── A01.jpg
+    ├── A02.jpg
+    ├── A03.jpg
     ├── alerta-total.jpg
     └── zap-execucao.jpg
 ```
