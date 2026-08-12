@@ -23,7 +23,7 @@ segurança identificados nas etapas anteriores.
 
 ### 1.1 Risco e requisito relacionados
 
-| Campo | Conteúdo |
+
 | Campo | Conteúdo |
 |---|---|
 | Risco relacionado | **R04 — Alteração de valores no carrinho e pedido (Tampering)** (Alto, 9), originado da ameaça T02 e do caso de abuso CA02. |
@@ -36,8 +36,8 @@ segurança identificados nas etapas anteriores.
 
 | Campo | Conteúdo |
 |---|---|
-| Referência utilizada | *(preencher — Renata)* |
-| Relação da referência com a prática | *(preencher — Renata)* |
+| Referência utilizada | **OWASP Input Validation Cheat Sheet** |
+| Relação da referência com a prática | A referência recomenda que dados recebidos de fontes não confiáveis sejam validados no lado do servidor antes de serem processados. Também destaca a importância da validação semântica, verificando se os valores recebidos são coerentes com as regras do sistema. Essa orientação se relaciona diretamente ao R04, pois o backend do RapidoFood deve recalcular e validar os preços, taxas e valores da transação sem confiar nos valores enviados pelo cliente. |
 
 ### 1.3 Testes definidos antes da implementação
 
@@ -83,8 +83,8 @@ segurança identificados nas etapas anteriores.
 
 | Campo | Conteúdo |
 |---|---|
-| Referência utilizada | *(preencher — Renata)* |
-| Relação da referência com a prática | *(preencher — Renata)* |
+| Referência utilizada | **OWASP Top 10:2021 — A01: Broken Access Control** |
+| Relação da referência com a prática | A referência trata de falhas de controle de acesso que permitem que usuários atuem fora das permissões previstas. A prática 2 aplica esse princípio ao acesso aos pedidos, exigindo que o backend verifique se o pedido pertence ao usuário autenticado antes de retornar seus dados. Dessa forma, a alteração do identificador do pedido não deve permitir o acesso a informações de terceiros. |
 
 ### 2.3 Testes definidos antes da implementação
 
@@ -150,13 +150,23 @@ Poderão ser incluídos:
 
 **Responsável: Renata**
 
-Verificar e registrar a relação entre as práticas escolhidas e os riscos,
-requisitos e decisões de arquitetura das etapas anteriores.
+As práticas de código seguro foram relacionadas aos riscos identificados na
+Etapa 2, aos requisitos de segurança definidos na Etapa 3 e às respectivas
+decisões de arquitetura.
 
 | Prática | Risco relacionado | Requisito relacionado | Decisão de arquitetura relacionada |
 |---|---|---|---|
-| Prática 1 | *(preencher — Renata)* | *(preencher — Renata)* | *(preencher — Renata)* |
-| Prática 2 | *(preencher — Renata)* | *(preencher — Renata)* | *(preencher — Renata)* |
+| Prática 1 — Validação server-side dos valores do pedido | **R04 — Alteração de valores no carrinho e pedido (Tampering)** | O backend deve recalcular e validar os itens, preços e taxas do pedido antes do envio ao gateway de pagamento, sem confiar nos valores enviados pelo cliente. | **DA03 — Validação server-side dos valores do pedido** |
+| Prática 2 — Autorização server-side para acesso a pedidos | **R06 — Exposição de dados de terceiros por falha de autorização (Information Disclosure)** | Todo endpoint que devolve dados de um pedido deve confirmar, no servidor, que o pedido pertence ao usuário autenticado antes de responder. | **DA02 — Autorização server-side para acesso a pedidos** |
+
+A Prática 1 implementa o controle definido para o R04, garantindo que valores
+financeiros sejam recalculados e validados pelo backend antes da transação ser
+encaminhada ao gateway de pagamento.
+
+A Prática 2 implementa o controle definido para o R06, garantindo que a
+autorização seja verificada no servidor e impedindo que um usuário autenticado
+acesse pedidos pertencentes a terceiros por meio da alteração do identificador
+do pedido.
 
 ---
 
@@ -192,4 +202,7 @@ Antes da conclusão da etapa, o grupo deverá verificar se:
 
 ## Referências
 
-*(preencher com as referências OWASP utilizadas pelo grupo.)*
+**Responsável: Renata**
+
+- OWASP. **Input Validation Cheat Sheet**. OWASP Cheat Sheet Series.
+- OWASP. **OWASP Top 10:2021 — A01: Broken Access Control**.
