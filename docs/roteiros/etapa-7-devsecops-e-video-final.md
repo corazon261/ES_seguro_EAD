@@ -138,26 +138,40 @@ CSF. Um portão de qualidade que qualquer pessoa pode pular não protege nada.
 
 **Responsável: Renata**
 
-Descrever como a verificação realizada na Etapa 5 seria incorporada ao
-processo de desenvolvimento.
+A verificação de vulnerabilidades realizada na Etapa 5 pode ser incorporada ao
+pipeline como uma etapa de teste dinâmico da aplicação.
 
-Considerar:
+Nessa etapa, o **OWASP ZAP** seria executado contra uma instância de teste do
+RapidoFood antes da implantação. O objetivo seria identificar alertas de
+segurança e configurações potencialmente inseguras que não foram identificados
+apenas durante a análise do código.
 
-- ZAP ou ferramenta equivalente;
-- evidências da execução;
-- análise dos achados;
-- correções propostas.
+Na Etapa 5, a verificação foi realizada utilizando o **OWASP ZAP 2.17.0**
+contra o **OWASP Juice Shop 20.2.0**, executado localmente para fins
+educacionais. Foram identificados alertas de diferentes prioridades, sendo
+selecionados para análise a configuração incorreta de CORS, a ausência do
+cabeçalho Content Security Policy e a presença de identificador de sessão na
+URL.
+
+No pipeline, os resultados da verificação deverão ser analisados antes da
+implantação. Alertas de maior severidade deverão impedir a continuidade até
+que sejam analisados e, quando necessário, corrigidos.
 
 **Evidências produzidas:**
 
 - relatório da verificação;
-- capturas de tela;
+- capturas de tela da execução do ZAP;
 - análise dos achados;
-- propostas de correção.
+- propostas de correção;
+- registros dos resultados da verificação.
 
 **Condição para continuar:**
 
-*(preencher — Renata)*
+O pipeline só deve avançar quando a verificação de vulnerabilidades for
+concluída e os achados relevantes tiverem sido analisados. Vulnerabilidades
+críticas ou altas que representem risco confirmado para a aplicação devem
+bloquear a implantação até que sejam corrigidas ou formalmente tratadas e
+aprovadas pelo responsável de segurança.
 
 ---
 
@@ -180,25 +194,41 @@ Considerar os riscos e controles definidos nas etapas anteriores.
 
 **Responsável: Renata**
 
-Descrever como o sistema seria acompanhado depois da implantação.
+Após a implantação, o RapidoFood deverá continuar registrando eventos de
+segurança e monitorando comportamentos suspeitos. Essa etapa utiliza as regras
+de detecção definidas na Etapa 6 para identificar possíveis tentativas de
+ataque ou comportamentos anormais.
 
-Considerar os resultados da Etapa 6:
+Entre os eventos relevantes estão tentativas de autenticação, acessos a
+pedidos, respostas de autorização, alterações de valores de transações e
+outras operações sensíveis.
 
-- registros de eventos;
-- regras de detecção;
-- alertas;
-- resposta inicial aos eventos suspeitos.
+As regras de detecção devem gerar alertas quando forem identificados
+comportamentos compatíveis com os riscos do sistema. Como exemplo, consultas
+repetidas a identificadores de pedidos podem indicar tentativa de enumeração
+relacionada ao **R06**, enquanto divergências entre valores enviados pelo
+cliente e valores recalculados pelo servidor podem indicar uma tentativa de
+adulteração relacionada ao **R04**.
+
+Quando um alerta for gerado, o evento deverá ser analisado, confirmado ou
+descartado e, quando necessário, deverá ser realizada uma contenção inicial.
+Os registros relevantes devem ser preservados para investigação e tratamento
+do incidente.
 
 **Evidências produzidas:**
 
-- logs;
-- alertas;
+- logs de segurança;
+- alertas gerados pelas regras de detecção;
 - registros de incidentes;
-- regras de detecção.
+- histórico das ações de resposta;
+- regras de detecção documentadas.
 
 **Condição para continuar:**
 
-*(preencher — Renata)*
+O monitoramento deve permanecer ativo após a implantação. Alertas de segurança
+devem ser analisados e os incidentes confirmados devem ser encaminhados para
+tratamento. Os resultados das análises devem alimentar a melhoria dos
+controles e das regras de detecção, mantendo o ciclo de segurança contínuo.
 
 ---
 
@@ -211,8 +241,7 @@ do pipeline.
 |---|---|---|
 | *(preencher — Gustavo)* | *(preencher — Gustavo)* | *(preencher — Gustavo)* |
 | Teste de autorização reprovado (TS04): a API devolveu dados de um pedido para quem não é o dono, em vez de `403 Forbidden` | A falha de autorização a nível de objeto é a origem do R06, o risco crítico do registro. Publicar nesse estado exporia dados pessoais de todos os clientes e configuraria tratamento irregular perante a LGPD | Interromper o pipeline e bloquear a implantação. Corrigir a verificação de propriedade do objeto no servidor, rodar a suíte novamente e só liberar após o TS04 passar. A exceção não pode ser concedida por quem escreveu o código |
-| *(preencher — Lucas)* | *(preencher — Lucas)* | *(preencher — Lucas)* |
-
+| Vulnerabilidade crítica ou alta identificada e não tratada | A implantação de uma aplicação com vulnerabilidade relevante pode permitir a exploração de riscos já identificados no projeto | Interromper o pipeline, analisar o achado, corrigir a vulnerabilidade e executar novamente os testes e a verificação de segurança antes de liberar a implantação |
 Podem ser consideradas condições como:
 
 - teste de segurança reprovado;
