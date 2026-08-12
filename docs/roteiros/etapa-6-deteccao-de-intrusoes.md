@@ -28,17 +28,32 @@ Explicar brevemente:
 
 **Responsável: Renata**
 
-Explicar a diferença entre:
+Prevenção e detecção são medidas diferentes, mas complementares.
 
-- **prevenir:** medidas utilizadas para evitar ou reduzir a possibilidade de
-  um incidente;
-- **detectar:** identificar comportamentos, eventos ou sinais que indiquem
-  uma possível atividade suspeita.
+**Prevenir** significa utilizar controles para evitar ou reduzir a possibilidade
+de que um incidente de segurança aconteça. No RapidoFood, exemplos de
+prevenção definidos nas etapas anteriores são a autenticação forte e proteção
+contra tentativas automatizadas relacionadas ao **R01 — Sequestro de conta**,
+a autorização server-side para impedir o acesso a pedidos de terceiros no
+**R06 — Exposição de dados de terceiros** e a validação server-side dos valores
+das transações no **R04 — Alteração de valores no carrinho e pedido**.
 
-Relacionar a diferença com os riscos identificados nas etapas anteriores.
+**Detectar** significa identificar eventos ou comportamentos que possam indicar
+uma atividade suspeita ou uma tentativa de violação dos controles de segurança.
+A detecção não substitui a prevenção: mesmo com controles preventivos, é
+necessário registrar e analisar eventos para identificar tentativas de ataque,
+comportamentos anormais ou possíveis falhas.
 
-*(preencher — Renata)*
+No contexto do RapidoFood, o monitoramento pode complementar os controles das
+etapas anteriores. Por exemplo, tentativas repetidas de autenticação podem
+indicar uma tentativa relacionada ao R01; acessos negados ou consultas
+incomuns a pedidos podem indicar comportamento relacionado ao R06; e
+divergências entre valores enviados pelo cliente e os valores recalculados pelo
+servidor podem indicar uma tentativa de alteração relacionada ao R04.
 
+Assim, a prevenção busca **impedir ou dificultar o incidente**, enquanto a
+detecção busca **identificar sinais de que uma tentativa ou incidente pode
+estar acontecendo**, permitindo uma resposta adequada.
 ---
 
 ## 3. Eventos que devem ser registrados
@@ -99,18 +114,20 @@ riscos do RapidoFood.
 
 ## 6. Regra de detecção 3
 
+
 **Responsável: Renata**
 
 | Campo | Conteúdo |
 |---|---|
-| Risco observado | *(preencher — Renata)* |
-| Fonte de dados | *(preencher — Renata)* |
-| Condição de alerta | *(preencher — Renata)* |
-| Resposta inicial | *(preencher — Renata)* |
+| Risco observado | **R04 — Alteração de valores no carrinho e pedido (Tampering)** (Alto, 9), originado da ameaça T02 e do caso de abuso CA02. |
+| Fonte de dados | Logs do backend/API de pedidos e do processo de checkout, registrando o usuário autenticado, identificador do pedido, valores enviados pelo cliente, valores recalculados pelo servidor, divergências encontradas, código de resposta e horário da requisição. |
+| Condição de alerta | Gerar um alerta quando forem identificadas divergências entre os valores enviados pelo cliente e os valores recalculados pelo servidor, especialmente quando ocorrerem tentativas repetidas de alteração de preço unitário, taxa ou valor total em um curto período. |
+| Resposta inicial | Rejeitar a transação quando a divergência for identificada, registrar o evento nos logs de segurança e encaminhar o alerta para análise. Caso sejam identificadas tentativas repetidas ou comportamento suspeito, preservar os registros para investigação e aplicar os mecanismos de contenção previstos pelo sistema. |
 
-A regra deverá representar um comportamento suspeito relacionado a um dos
-riscos do RapidoFood.
-
+A regra está relacionada ao **R04**, pois permite identificar tentativas de
+adulteração dos valores de uma transação. Ela complementa o controle preventivo
+definido na Etapa 4, no qual o backend recalcula e valida os valores antes de
+encaminhar a transação ao gateway de pagamento.
 ---
 
 ## 7. O que acontece depois de um alerta
