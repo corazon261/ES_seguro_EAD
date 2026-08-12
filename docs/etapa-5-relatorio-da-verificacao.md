@@ -233,14 +233,13 @@ Organização:
 ```
 evidencias/
 └── etapa-5/
-    ├── zap-execucao.png
-    ├── a01-cors.png
-    ├── a02-csp.png
-    ├── a03-session-id-url.png
-    └── relatorio-da-verificacao.md
+    ├── A01
+    ├── A02
+    ├── A03
+    ├── alerta-total.jpg
+    └── zap-execucao.jpg
 ```
  
-Os nomes são apenas uma sugestão; você pode manter os nomes que já utilizou.
  
 ---
  
