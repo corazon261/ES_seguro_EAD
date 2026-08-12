@@ -54,6 +54,8 @@ servidor podem indicar uma tentativa de alteração relacionada ao R04.
 Assim, a prevenção busca **impedir ou dificultar o incidente**, enquanto a
 detecção busca **identificar sinais de que uma tentativa ou incidente pode
 estar acontecendo**, permitindo uma resposta adequada.
+
+
 ---
 
 ## 3. Eventos que devem ser registrados
@@ -128,6 +130,7 @@ A regra está relacionada ao **R04**, pois permite identificar tentativas de
 adulteração dos valores de uma transação. Ela complementa o controle preventivo
 definido na Etapa 4, no qual o backend recalcula e valida os valores antes de
 encaminhar a transação ao gateway de pagamento.
+
 ---
 
 ## 7. O que acontece depois de um alerta
