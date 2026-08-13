@@ -27,10 +27,10 @@
 | Etapa | Entregável mínimo | Arquivo sugerido | Status |
 | --- | --- | --- | --- |
 | **1 — Ameaças STRIDE e Casos de Abuso** | Descrição, ativos, STRIDE, casos de abuso, diagramas | `Passo 1...md`, `Passo 2 (Entregavel 1)...md` | ✅ **Concluída** |
-| **2 — Análise, Priorização e Tratamento de Riscos (NIST CSF)** | Critérios de prob./impacto, registro de riscos, priorização, tratamento, mapeamento NIST, risco residual | `docs/etapa-2-riscos-nist.md` | ⬜ **Próximo foco** |
+| **2 — Análise, Priorização e Tratamento de Riscos (NIST CSF)** | Critérios de prob./impacto, registro de riscos, priorização, tratamento, mapeamento NIST, risco residual | `docs/etapa-2-riscos-nist.md` | ✅ **Concluída** |
 | **3 — Projeto de Arquitetura Segura** | 3 requisitos de segurança, 3 vulnerabilidades (CWE/OWASP), 1 diagrama, 3 decisões | `docs/etapa-3-arquitetura-segura.md` + `diagramas/etapa-3/` | ⬜ |
 | **4 — Código Seguro e Testes** | 2 práticas de código seguro, cada uma com 2 testes definidos antes | `docs/etapa-4-codigo-seguro.md` + `codigo/etapa-4/` | ⬜ |
-| **5 — Verificação de Vulnerabilidades** | 1 sessão com ferramenta (ZAP), análise de 3 achados + correções | `evidencias/etapa-5/relatorio-da-verificacao.md` | ⬜ |
+| **5 — Verificação de Vulnerabilidades** | 1 sessão com ferramenta (ZAP), análise de 3 achados + correções | `evidencias/etapa-5/relatorio-da-verificacao.md` | ✅ **Concluída** |
 | **6 — Monitoramento e Detecção de Intrusões** | Roteiro textual + 3 regras de detecção | `roteiros/etapa-6-deteccao-de-intrusoes.md` | ⬜ |
 | **7 — DevSecOps e Vídeo Final** | Pipeline (texto/diagrama) + roteiro + vídeo de 5–8 min | `roteiros/etapa-7-devsecops-e-video-final.md` | ⬜ |
 
@@ -39,19 +39,21 @@
 
 ## Divisão de tarefas por integrante
 
-A ideia é aproveitar o que cada um já "domina" da Etapa 1 e distribuir as demais.
+A divisão foi ajustada ao longo do projeto para distribuir as responsabilidades
+entre os integrantes e garantir participação individual por meio dos commits.
 
-| Integrante | Etapa 2 (riscos) | Outras etapas (responsável principal) |
-| --- | --- | --- |
-| **Lucas** | Riscos de Spoofing/Elevation (T01, T07–T09) | Etapa 3 (diagrama de arquitetura + vulnerabilidades CWE/OWASP); Etapa 5 (análise dos achados) |
-| **Gustavo** | Riscos de Tampering/Repudiation (T02, T03) | Etapa 4 (prática 1) ; Etapa 7 (pipeline DevSecOps) |
-| **Luiz** | Riscos de Information Disclosure (T04, T10) | Etapa 4 (prática 2) ; Etapa 6 (roteiro de detecção) |
-| **Renata** | Riscos de Denial of Service (T05, T06) | Etapa 5 (execução do ZAP + evidências) |
-| **Andre** | **Arcabouço da Etapa 2**: critérios de probabilidade e impacto, tabela de cálculo, introdução às funções do NIST CSF e considerações finais | Etapa 3 (3 requisitos + 3 decisões de arquitetura) |
-| **Todos** | Cada um justifica seus próprios riscos e faz o mapeamento NIST das suas linhas | Etapa 7 (vídeo final) |
+A divisão abaixo representa a organização de responsabilidades adotada pelo
+grupo ao longo do projeto. As contribuições individuais são comprovadas pelo
+histórico de commits do repositório.
 
-> Divisão sugerida — ajustem entre vocês. O importante é que cada nome apareça no
-> histórico contribuindo com conteúdo relevante.
+| Integrante | Etapa 2 | Etapa 3 | Etapa 4 | Etapa 5 | Etapa 6 | Etapa 7 |
+|---|---|---|---|---|---|---|
+| **Lucas** | Riscos de Spoofing/Elevation (T01, T07–T09) | Diagrama de arquitetura + vulnerabilidades CWE/OWASP | Implementação/pseudocódigo da prática 2 | Análise dos achados | Regra de detecção 1 | Planejamento e análise de ameaças |
+| **Gustavo** | Riscos de Tampering/Repudiation (T02, T03) | Parte atribuída na arquitetura | Prática de código seguro 1 e testes relacionados | Parte atribuída na análise | Eventos que devem ser registrados + relação com etapas anteriores | Implementação segura + condição de bloqueio do pipeline |
+| **Luiz** | Riscos de Information Disclosure (T04, T10) | Parte atribuída na arquitetura | Prática de código seguro 2 e testes relacionados | Parte atribuída na análise | Regra de detecção 2 | Testes automatizados e análise de código |
+| **Renata** | Riscos de Denial of Service (T05, T06) | Referências OWASP e relação com etapas anteriores | Referências OWASP das duas práticas + relação com riscos, requisitos e arquitetura | Execução do ZAP + evidências | Prevenção x detecção + Regra de detecção 3 | Teste dinâmico/verificação de vulnerabilidades + monitoramento e resposta |
+| **Andre** | Critérios de probabilidade/impacto, NIST CSF e considerações finais | Requisitos de segurança + decisões de arquitetura | Implementação/pseudocódigo da prática 1 | Parte atribuída na análise | Conceito de detecção + resposta após alerta | Requisitos/arquitetura + condições de implantação |
+| **Todos** | Justificativas, mapeamento NIST e contribuições individuais | Contribuições conforme divisão da etapa | — | — | — | Vídeo final |
 
 ## Detalhe da Etapa 2 (próximo entregável)
 
@@ -76,8 +78,11 @@ arquivos da Etapa 1. Checklist dos 13 itens mínimos:
 > (T0x) ou caso de abuso (CA0x) de origem. Escala: Pontuação = Probabilidade
 > (1–4) × Impacto (1–4) → 1–3 Baixo, 4–7 Médio, 8–11 Alto, 12–16 Crítico.
 
-## Estrutura de pastas recomendada (a criar nas próximas etapas)
 
+## Estrutura de pastas prevista
+
+A estrutura abaixo apresenta a organização planejada para os entregáveis das
+etapas. Os arquivos podem ser ajustados conforme a organização final do grupo.
 ```
 ES_seguro_EAD/
 ├── README.md
