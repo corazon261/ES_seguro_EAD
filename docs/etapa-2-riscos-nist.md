@@ -281,7 +281,18 @@ A definição da sequência de implementação dos controles do **RapidoFood** f
 
 ## 13. Considerações finais
 
-_(Responsável: Andre.)_ Sintetizar: riscos mais importantes; razões da
-priorização; estratégias de tratamento predominantes; funções do NIST mais
-relevantes para o RapidoFood; controles essenciais; principais dificuldades;
-limitações da avaliação; e pontos a detalhar nas próximas etapas.
+Após a análise e priorização baseada no framework NIST CSF, concluímos que os riscos mais importantes para o sistema RapidoFood são o R01 (Sequestro de contas e acessos indevidos) e o R06 (Acesso a dados de outros usuários via IDOR), ambos classificados como Críticos (nível 12), seguidos pelos riscos ligados à manipulação financeira e de pedidos (R02, R03 e R04), classificados como Altos.
+
+As razões que determinaram essa priorização estão fundamentadas no impacto direto aos ativos de maior valor da plataforma: credenciais, dados financeiros (cartões/gateways) e informações pessoais (endereços e localização). A violação desses ativos resulta em severos prejuízos financeiros e sanções legais (como LGPD), justificando a alta prioridade.
+
+A estratégia de tratamento predominante adotada pelo grupo foi a de Mitigação, buscando reduzir a probabilidade e o impacto das ameaças através da implementação de controles técnicos. Nesse contexto, as funções do NIST CSF mais relevantes para o nosso sistema foram a função PROTEGER (PR), com foco no controle de identidade, autenticação (PR.AA) e segurança de dados (PR.DS), seguida pela função DETECTAR (DE), essencial para identificar anomalias nos logs e transações.
+
+Os controles considerados essenciais para a operação segura do RapidoFood incluem:
+
+1. **Implementação de Autenticação Multifator (MFA).**
+
+2. **Validação obrigatória de autorização e recálculo de valores estritamente no lado do servidor (server-side).**
+
+3. **Uso de códigos de confirmação descartáveis (OTP) para validar a entrega dos pedidos.**
+
+As principais dificuldades encontradas pelo grupo durante esta etapa envolveram a diferenciação exata entre as funções do NIST (especialmente separar os resultados esperados dos controles técnicos aplicados) e a quantificação objetiva dos riscos qualitativos. A principal limitação da avaliação é que a estimativa do risco residual foi feita de forma teórica; em um cenário real, esses valores só poderiam ser validados após testes práticos em ambiente de produção.
