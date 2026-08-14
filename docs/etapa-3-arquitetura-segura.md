@@ -90,38 +90,38 @@ Os arquivos deverão ser armazenados em:
 Cada decisão deverá apresentar o problema ou risco tratado, a decisão,
 o motivo, o componente afetado e o resultado esperado.
 
-### DA01 — *(preencher — Andre)*
+### DA01 — Implementação de MFA e Rate Limiting no Login
 
 | Campo | Conteúdo |
 |---|---|
-| Risco tratado | *(preencher)* |
-| Problema | *(preencher)* |
-| Decisão tomada | *(preencher)* |
-| Componente afetado | *(preencher)* |
-| Justificativa | *(preencher)* |
-| Resultado esperado | *(preencher)* |
+| Risco tratado | R01 — Sequestro de conta (Spoofing) |
+| Problema | A autenticação atual depende de um único fator (senha) e não bloqueia testes automatizados. Isso permite que invasores assumam as contas dos usuários através de ataques de *credential stuffing* ou força bruta. |
+| Decisão tomada | Implementar a obrigatoriedade de Autenticação Multifator (MFA) baseada em OTP (código por SMS/e-mail ou app autenticador) e configurar *rate limiting* com bloqueio temporário após 5 tentativas falhas de login no mesmo IP/conta. |
+| Componente afetado | Serviço de autenticação (`Auth`) e Banco de dados (para registro das tentativas e chaves MFA). |
+| Justificativa | Apenas senhas não oferecem resistência adequada se vazadas em outros serviços. O MFA anula a utilidade de uma senha roubada sozinha, enquanto o *rate limiting* encarece e inviabiliza ataques de força bruta, atendendo ao RS01. |
+| Resultado esperado | Bloqueio eficaz contra robôs que testam senhas em massa, resultando em mitigação severa da probabilidade de invasões de conta sem impacto dramático na usabilidade geral do cliente. |
 
-### DA02 — *(preencher — Andre)*
-
-| Campo | Conteúdo |
-|---|---|
-| Risco tratado | *(preencher)* |
-| Problema | *(preencher)* |
-| Decisão tomada | *(preencher)* |
-| Componente afetado | *(preencher)* |
-| Justificativa | *(preencher)* |
-| Resultado esperado | *(preencher)* |
-
-### DA03 — *(preencher — Andre)*
+### DA02 — Validação de Propriedade do Objeto (Mitigação de IDOR)
 
 | Campo | Conteúdo |
 |---|---|
-| Risco tratado | *(preencher)* |
-| Problema | *(preencher)* |
-| Decisão tomada | *(preencher)* |
-| Componente afetado | *(preencher)* |
-| Justificativa | *(preencher)* |
-| Resultado esperado | *(preencher)* |
+| Risco tratado | R06 — Exposição de dados de terceiros por falha de autorização (Information Disclosure) |
+| Problema | A API aceita requisições aos detalhes do pedido usando apenas o ID na URL (ex: `/pedidos/123`), confiando que o usuário cliente só acessará seus próprios pedidos. Isso permite que qualquer usuário logado mude o ID e veja dados de terceiros. |
+| Decisão tomada | Implementar autorização de nível de objeto (server-side) verificando sempre se o `user_id` vinculado ao token JWT (sessão) corresponde ao `dono_id` do pedido no banco de dados. Além disso, migrar os identificadores sequenciais para UUIDs aleatórios. |
+| Componente afetado | Aplicação / API (Controladores de Pedido) e Banco de dados. |
+| Justificativa | Adotar o princípio do privilégio mínimo e a premissa do modelo *Zero Trust*, em que a autorização deve ser revalidada a cada requisição para os recursos, impedindo enumeração (UUID) e acesso indevido (RS02). |
+| Resultado esperado | Qualquer requisição a um pedido do qual o usuário não é o dono originará um erro imediato de permissão (`HTTP 403 Forbidden`), impedindo integralmente o vazamento em massa de dados protegidos pela LGPD. |
+
+### DA03 — Recálculo Obrigatório de Valores no Servidor
+
+| Campo | Conteúdo |
+|---|---|
+| Risco tratado | R04 — Alteração de valores no carrinho e pedido (Tampering) |
+| Problema | O sistema aceita a requisição de fechamento de carrinho e pagamento confiando nos valores que o aplicativo cliente (app) envia. Um invasor usando um proxy pode interceptar o payload e alterar `preco_unitario` para R$0,01. |
+| Decisão tomada | Todo recálculo financeiro e validação de valores deverá ocorrer estritamente no backend (server-side). A API usará apenas os IDs dos produtos e a quantidade, consultando o banco de dados para montar o valor total e enviar ao gateway. |
+| Componente afetado | Aplicação / API, Integração com o Gateway de Pagamento e Banco de dados. |
+| Justificativa | Uma das regras máximas de segurança de software é nunca confiar em dados advindos do lado do cliente (Client-Side). O processamento no backend garante a integridade matemática da transação e impede fraudes, conforme exigido no RS03. |
+| Resultado esperado | Tentativas de enviar um payload manipulado ao sistema retornarão erro `HTTP 400 Bad Request` devido à divergência de cálculo. A fraude será bloqueada antes que qualquer solicitação chegue ao gateway de pagamento. |
 
 ---
 
