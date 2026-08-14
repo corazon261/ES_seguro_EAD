@@ -16,11 +16,8 @@
 | Gustavo Borges Arrussul Veiga | @GustavoArrussul | ✅ |
 | Luiz Hermano Bernardes Martins | @LuizHerm | ✅ |
 | Renata Rodrigues Vassalo da Rosa | @renatavassallo | ✅ |
-| **Andre Luiz Montanha de Abreu** | _(preencher)_ | ⬜ **ainda não — prioridade** |
+| **Andre Luiz Montanha de Abreu** | @andreluiz2431 | ✅ |
 
-> **Andre:** primeiro passo é clonar o repo e configurar o git com o e-mail da
-> sua conta do GitHub (veja "Como contribuir" no fim deste arquivo), para que
-> seus commits contem como participação individual.
 
 ## Visão geral das 7 etapas
 
