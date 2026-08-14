@@ -153,7 +153,6 @@ já descritos no [Entregável 1](<../Passo 2 (Entregavel 1) - Modelagem de amea�
 - **Afetados:** clientes, restaurantes, entregadores e a própria plataforma.
 - **Nível (Médio):** a pontuação é 2 × 3 = 6, classificando o risco como Médio.
 
-  ###  R04 — _(a preencher pelos responsáveis)_
 
 > Cada dono deve seguir o modelo acima: justificar probabilidade, impacto, quem é
 > afetado e por que o nível representa o contexto.
@@ -241,7 +240,6 @@ Para cada risco, escolher uma estratégia principal:
 | R06 | Reduzir | Verificação de propriedade do objeto no servidor em todo endpoint que devolve pedido (comparar o dono do pedido com o usuário do token, negando por padrão); substituição do identificador sequencial por UUID; limite de consultas de pedido por conta por minuto; alerta quando uma conta consulta pedidos que não são dela | Govern, Identify, Protect, Detect, Respond | Desenvolvimento (backend) e Segurança | Teste automatizado que consulta o pedido de outro usuário e exige resposta `403 Forbidden`; revisão de que nenhum endpoint de pedido aceita ID sem checagem de dono; log das tentativas negadas; simulação de enumeração sequencial disparando o alerta |
 | R07 | Reduzir | Mascaramento do telefone do cliente (chamada e chat via número intermediário da plataforma); exibição do endereço completo apenas entre o aceite e a confirmação da entrega; revogação automática do acesso aos dados assim que o pedido é concluído, mantendo no histórico apenas data, valor e região | Govern, Identify, Protect | Desenvolvimento (aplicativo do entregador) e Jurídico/DPO | Consulta ao histórico do entregador após a entrega deve retornar os dados mascarados; teste de revogação verificando que a API nega os dados completos para pedido concluído; conferência de que o número real do cliente não trafega para o dispositivo do entregador |
 | R08 | Reduzir | Rate limiting por IP e por conta; bloqueio temporário após volume anormal de requisições; monitoramento e alertas de tráfego | Protect, Detect, Respond | Desenvolvimento e Operações | Testes de limite de requisições; registro de bloqueios; verificação dos alertas de tráfego |
-| R04 | _(preencher)_ | _(controles específicos e verificáveis)_ | _(funções)_ | _(responsáveis)_ | _(evidências)_ |
 
 > Controles devem ser **específicos e observáveis**. Evitem "aumentar a
 > segurança", "usar criptografia", "aplicar o NIST" sem dizer onde, como e quem
