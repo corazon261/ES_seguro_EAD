@@ -44,15 +44,13 @@ Os requisitos de segurança abaixo foram derivados dos riscos críticos e altos 
 
 **Responsável principal: Lucas**
 
-Para cada requisito, deverá ser identificada uma vulnerabilidade relacionada
-em referências reconhecidas, como CWE, OWASP Top 10, OWASP ASVS ou OWASP
-Cheat Sheet Series.
+Para cada requisito, foi identificada uma vulnerabilidade correspondente em catálogos e padrões reconhecidos da indústria (CWE, OWASP Top 10 e OWASP Cheat Sheets), estabelecendo a relação direta com a estrutura do RapidoFood.
 
 | Risco | Vulnerabilidade ou categoria | Referência utilizada | Relação com o sistema |
 |---|---|---|---|
-| *(preencher — Lucas)* | | | |
-| *(preencher — Lucas)* | | | |
-| *(preencher — Lucas)* | | | |
+| **R01 (RS01)** — Sequestro de conta (Spoofing) | Falha de Identificação e Autenticação / Ausência de Limitação de Tentativas (`CWE-307: Improper Restriction of Excessive Authentication Attempts` e `CWE-287: Improper Authentication`) | **OWASP Top 10:2021 — A07: Identification and Authentication Failures** / OWASP Authentication Cheat Sheet | O endpoint `/api/v1/auth/login` do RapidoFood, ao permitir tentativas sucessivas sem MFA nem *rate limiting*, torna-se vulnerável a ataques de força bruta e *credential stuffing*, permitindo que atacantes assumam contas de clientes e realizem pedidos com cartões salvos. |
+| **R06 (RS02)** — Exposição de dados de terceiros (Information Disclosure) | Quebra de Controle de Acesso / Referência Direta Insegura a Objetos (`CWE-639: Authorization Bypass Through User-Controlled Key` / IDOR) | **OWASP Top 10:2021 — A01: Broken Access Control** / OWASP Authorization Cheat Sheet | O backend do RapidoFood, ao receber requisições em `/api/v1/pedidos/{id}` confiando apenas no ID fornecido na URL sem verificar se o `usuario_id` do token JWT autenticado é o dono do pedido, permite a qualquer usuário ler pedidos e dados sensíveis de terceiros (violação LGPD). |
+| **R04 (RS03)** — Alteração de valores no carrinho e pedido (Tampering) | Manipulação de Parâmetros no Lado do Cliente / Validação Inadequada de Entradas (`CWE-472: External Control of Assumed-Immutable Web Parameter` e `CWE-20: Improper Input Validation`) | **OWASP Top 10:2021 — A04: Insecure Design** / OWASP Input Validation Cheat Sheet | A aplicação confiava nos valores (`preco_unitario`, `taxa_entrega`, `valor_total`) enviados no payload pelo aplicativo cliente. Um invasor interceptando o tráfego via proxy HTTP pode adulterar preços antes do envio ao gateway de pagamento. |
 
 ---
 
@@ -60,26 +58,26 @@ Cheat Sheet Series.
 
 **Responsável principal: Lucas**
 
-O diagrama deverá apresentar:
+O diagrama apresenta a visão estrutural e os controles de segurança do RapidoFood, incluindo:
 
-- usuários;
-- interface ou aplicação;
-- serviço de autenticação;
-- regras de autorização;
-- banco de dados;
-- logs ou monitoramento;
-- serviços externos relevantes;
-- posição dos principais controles.
+- Usuários (Cliente, Restaurante, Entregador, Administrador);
+- Interfaces (App Mobile, Painel Web SPA);
+- Borda e Gateway de API com WAF e Rate Limiting;
+- Serviço de Autenticação com mecanismo MFA (OTP) e gerenciador de sessão JWT;
+- Serviço de Pedidos com Módulo de Autorização de Objeto (Anti-IDOR) e Validação Server-Side de Preços;
+- Banco de dados relacional isolado (PostgreSQL) com consultas parametrizadas e criptografia at-rest;
+- Auditoria centralizada e SIEM para monitoramento e detecção de intrusões;
+- Integrações externas (Gateway de Pagamento, Provedor de Notificações/SMS, Mapas);
+- Posição dos principais controles mitigadores dos riscos R01, R04 e R06.
 
 ### Arquivos
 
-Os arquivos deverão ser armazenados em:
+Os arquivos estão armazenados em:
 
 `diagramas/etapa-3/`
 
-**Fonte do diagrama:** *(preencher — Lucas)*
-
-**Imagem do diagrama:** *(preencher — Lucas)*
+- **Fonte do diagrama (Mermaid):** [`diagramas/etapa-3/arquitetura-segura.md`](../diagramas/etapa-3/arquitetura-segura.md)
+- **Imagem do diagrama (SVG):** [`diagramas/etapa-3/arquitetura-segura.svg`](../diagramas/etapa-3/arquitetura-segura.svg)
 
 ---
 
@@ -171,4 +169,12 @@ Verificar se:
 
 ## Referências
 
-*(preencher conforme as referências utilizadas pelo grupo.)*
+- MITRE. **CWE-307: Improper Restriction of Excessive Authentication Attempts**. Common Weakness Enumeration.
+- MITRE. **CWE-639: Authorization Bypass Through User-Controlled Key**. Common Weakness Enumeration.
+- MITRE. **CWE-472: External Control of Assumed-Immutable Web Parameter**. Common Weakness Enumeration.
+- OWASP. **OWASP Top 10:2021 — A01: Broken Access Control**.
+- OWASP. **OWASP Top 10:2021 — A04: Insecure Design**.
+- OWASP. **OWASP Top 10:2021 — A07: Identification and Authentication Failures**.
+- OWASP. **Authentication Cheat Sheet**. OWASP Cheat Sheet Series.
+- OWASP. **Authorization Cheat Sheet**. OWASP Cheat Sheet Series.
+- OWASP. **Input Validation Cheat Sheet**. OWASP Cheat Sheet Series.
