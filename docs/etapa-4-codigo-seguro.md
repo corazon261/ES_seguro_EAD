@@ -103,7 +103,9 @@ funcao processarCheckout(Requisicao req):
 
 **Responsável: Andre**
 
-*(preencher — Andre)*
+Com a implementação desta prática, o motor de pedidos do RapidoFood deixa de ser vulnerável a manipulações no lado do cliente (Client-Side).
+
+O resultado esperado é que qualquer tentativa de burlar os preços (como demonstrado no teste TS02) seja bloqueada imediatamente na camada da API. Mesmo que o atacante intercepte a requisição e envie um JSON dizendo que um prato de R$ 50,00 custa R$ 1,00, a variável valor_total_calculado_servidor utilizará o preço inviolável do Banco de Dados. A divergência acionará a condição de erro (400 Bad Request), protegendo a integridade financeira do restaurante e da plataforma, além de gerar um log crítico para a equipe de resposta a incidentes, mitigando com sucesso o risco R04. Em cenários legítimos (TS01), a validação passará de forma transparente para o usuário.
 
 ---
 
