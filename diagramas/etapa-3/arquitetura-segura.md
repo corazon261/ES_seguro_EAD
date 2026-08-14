@@ -4,7 +4,9 @@
 **Responsável:** Lucas Kaue Ribeiro Weber  
 **Sistema:** RapidoFood (App de Delivery)
 
-Este documento contém o diagrama de arquitetura segura do RapidoFood, apresentando os componentes do sistema, serviços de autenticação e autorização, banco de dados, auditoria/monitoramento, integrações externas e o posicionamento dos principais controles de segurança definidos para mitigar os riscos críticos e altos (R01, R04 e R06).
+Este documento apresenta o diagrama da arquitetura segura do RapidoFood, evoluindo a partir do diagrama de contexto da Etapa 1. Ele detalha a fronteira de confiança, a camada de perímetro (API Gateway + WAF + Rate Limit), os serviços internos com seus respectivos controles mitigadores (DA01, DA02, DA03), a camada de auditoria e logs (SIEM) e as integrações externas.
+
+O código Mermaid abaixo é o **arquivo-fonte**; o GitHub o renderiza diretamente como imagem. A imagem vetorial em SVG está disponível em [`arquitetura-segura.svg`](arquitetura-segura.svg).
 
 ---
 
@@ -12,97 +14,62 @@ Este documento contém o diagrama de arquitetura segura do RapidoFood, apresenta
 
 ```mermaid
 flowchart TB
-    %% Atores / Usuários
-    subgraph Atores[" 👥 Atores / Usuários "]
-        Cliente(["👤 Cliente"])
-        Restaurante(["🏪 Restaurante / Loja"])
-        Entregador(["🛵 Entregador"])
-        Admin(["🛡️ Administrador"])
-    end
+    %% Usuários / Atores
+    Cliente([Cliente])
+    Restaurante([Restaurante / Loja])
+    Entregador([Entregador])
+    Admin([Administrador])
 
-    %% Camada de Apresentação / Clientes
-    subgraph Interfaces[" 📱 Camada de Apresentação "]
-        AppCliente["App Mobile (Cliente / Entregador)"]
-        WebAdmin["Painel Web (Restaurante / Admin)"]
-    end
+    %% Interface
+    App[Aplicativo móvel / Portal web<br/>HTTPS / TLS 1.3]
 
-    %% Borda de Segurança / API Gateway
-    subgraph Perimetro[" 🌐 Camada de Perímetro e Proteção "]
-        APIGateway["API Gateway / Reverse Proxy"]
-        WAF["WAF & Rate Limiting\n[Controle: Bloqueio de Força Bruta e DoS]"]
-    end
-
-    %% Serviços de Backend e Controles de Segurança
-    subgraph Backend[" ⚙️ Camada de Aplicação e Serviços de Backend "]
+    %% Fronteira de Confiança / Plataforma RapidoFood
+    subgraph RapidoFood[Plataforma RapidoFood — Fronteira de Confiança]
+        
+        %% Camada de Borda
+        Gateway[API Gateway / Reverse Proxy<br/>WAF + Rate Limiting<br/>Controle Anti-Brute Force]
         
         %% Serviço de Autenticação
-        subgraph ServicoAuth[" 🔑 Serviço de Autenticação (Auth Service) "]
-            AuthAPI["Controlador de Autenticação (/auth/login)"]
-            MFAEngine["Mecanismo MFA (OTP via SMS/E-mail)\n[Controle DA01 / RS01 - Mitigação R01]"]
-            TokenManager["Gerenciador de Sessão & JWT\n(Assinatura RS256 / Expiração Curta)"]
-        end
-
-        %% Serviço de Pedidos e Negócio
-        subgraph ServicoPedidos[" 📦 Serviço de Pedidos (Order Service) "]
-            OrderAPI["API de Pedidos (/pedidos & /checkout)"]
-            ServerValidation["Validação Server-Side de Preços e Taxas\n[Controle DA03 / RS03 - Mitigação R04]"]
-            AuthzModule["Módulo de Autorização de Nível de Objeto\n(Verificação dono_id == token.user_id)\n[Controle DA02 / RS02 - Mitigação R06]"]
-        end
-
-        %% Serviço de Logs e SIEM
-        subgraph Monitoramento[" 📊 Auditoria e Detecção "]
-            Logger["Serviço de Logs Estruturados"]
-            SIEM["SIEM / Detecção de Intrusões\n(Regras de Detecção em Tempo Real)"]
-        end
+        Auth[Serviço de autenticação<br/>MFA Obrigatório OTP + JWT RS256<br/>Controle DA01 / RS01 — Mitiga R01]
+        
+        %% API de Pedidos / Negócio
+        API[RapidoFood — API de Pedidos<br/>Autorização Server-Side Anti-IDOR: DA02 / RS02<br/>Validação de Preços Server-Side: DA03 / RS03]
+        
+        %% Banco de Dados
+        DB[(Banco de dados PostgreSQL<br/>Criptografia At-Rest + Queries Parametrizadas)]
+        
+        %% Auditoria e Detecção
+        SIEM[Serviço de Auditoria e SIEM<br/>Logs Estruturados e Regras de Detecção]
     end
 
-    %% Camada de Armazenamento
-    subgraph Dados[" 🗄️ Camada de Persistência "]
-        DB[("PostgreSQL\n(Dados de Usuários, Pedidos e Produtos)\n[Criptografia At-Rest & Queries Parametrizadas]")]
-    end
+    %% Serviços Externos
+    Pagamento[[Gateway de pagamento<br/>PCI-DSS Compliant]]
+    Mapas[[Serviço de mapas / geolocalização]]
+    Notif[[Provedor de notificações<br/>SMS / E-mail / OTP]]
 
-    %% Serviços Externos Integrados
-    subgraph Externos[" ☁️ Serviços Externos Integrados "]
-        GatewayPagamento[["💳 Gateway de Pagamento Seguro\n(PCI-DSS Compliant)"]]
-        ServicoNotif[["✉️ Provedor de Notificações / SMS / E-mail\n(Disparo de Códigos MFA e Alertas)"]]
-        ServicoMapas[["🗺️ Serviço de Mapas / Logística"]]
-    end
+    %% Conexões Usuários -> Interface
+    Cliente --> App
+    Restaurante --> App
+    Entregador --> App
+    Admin --> App
 
-    %% Conexões dos Atores às Interfaces
-    Cliente --> AppCliente
-    Entregador --> AppCliente
-    Restaurante --> WebAdmin
-    Admin --> WebAdmin
+    %% Interface -> Gateway
+    App -->|HTTPS / TLS 1.3| Gateway
 
-    %% Interfaces acessam o API Gateway via TLS 1.3
-    AppCliente -->|"HTTPS / TLS 1.3"| APIGateway
-    WebAdmin -->|"HTTPS / TLS 1.3"| APIGateway
+    %% Gateway -> Serviços
+    Gateway -->|Autenticação / Login| Auth
+    Gateway -->|Requisições de Pedidos| API
 
-    %% Gateway aplica filtros de segurança
-    APIGateway --- WAF
+    %% Auth Flows
+    Auth -->|Valida Credenciais| DB
+    Auth -->|Dispara OTP| Notif
+    Auth -.->|Logs de Tentativas| SIEM
 
-    %% Gateway roteia para Auth e Pedidos
-    APIGateway -->|"Requisições de Login / MFA"| AuthAPI
-    APIGateway -->|"Requisições de API"| OrderAPI
-
-    %% Fluxos Internos do Auth Service
-    AuthAPI --> MFAEngine
-    MFAEngine --> TokenManager
-    MFAEngine -.->|"Envia código OTP"| ServicoNotif
-    AuthAPI -->|"Consulta Credenciais Seguras"| DB
-    AuthAPI -->|"Registra tentativas de login"| Logger
-
-    %% Fluxos Internos do Order Service
-    OrderAPI --> AuthzModule
-    OrderAPI --> ServerValidation
-    ServerValidation -->|"Consulta Preços Oficiais"| DB
-    AuthzModule -->|"Valida Dono do Pedido"| DB
-    OrderAPI -->|"Registra eventos de acesso / divergências"| Logger
-    ServerValidation -->|"Envia transação recalculada"| GatewayPagamento
-    OrderAPI -->|"Consulta Rotas / Logística"| ServicoMapas
-
-    %% Fluxo de Logs para o SIEM
-    Logger --> SIEM
+    %% API Flows
+    API -->|Consulta Catálogo e Valida Dono| DB
+    API -->|Envia Transação Validada| Pagamento
+    API -->|Consulta Rotas| Mapas
+    API -.->|Logs de Acesso e Divergências| SIEM
 ```
 
 ---
