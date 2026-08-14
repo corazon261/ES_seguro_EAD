@@ -183,7 +183,8 @@ Poderão ser incluídos:
 
 **Responsável: Andre**
 
-*(preencher nome do arquivo ou material produzido)*
+O pseudocódigo do recálculo de valores da API foi detalhado diretamente na seção 1.4 deste documento. Uma cópia deste pseudocódigo (focada na mitigação do Risco R04) pode ser encontrada no arquivo:
+`codigo/etapa-4/pratica-1-validacao-valores.md`
 
 ### Materiais da prática 2
 
