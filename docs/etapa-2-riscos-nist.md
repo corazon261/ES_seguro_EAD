@@ -281,18 +281,22 @@ A definição da sequência de implementação dos controles do **RapidoFood** f
 
 ## 13. Considerações finais
 
-Após a análise e priorização baseada no framework NIST CSF, concluímos que os riscos mais importantes para o sistema RapidoFood são o R01 (Sequestro de contas e acessos indevidos) e o R06 (Acesso a dados de outros usuários via IDOR), ambos classificados como Críticos (nível 12), seguidos pelos riscos ligados à manipulação financeira e de pedidos (R02, R03 e R04), classificados como Altos.
+A análise e priorização de riscos para o sistema **RapidoFood**, fundamentada no framework **NIST CSF 2.0**, permitiu ao grupo transformar as ameaças abstratas mapeadas na Etapa 1 em um plano prático, estruturado e mensurável de segurança da informação.
 
-As razões que determinaram essa priorização estão fundamentadas no impacto direto aos ativos de maior valor da plataforma: credenciais, dados financeiros (cartões/gateways) e informações pessoais (endereços e localização). A violação desses ativos resulta em severos prejuízos financeiros e sanções legais (como LGPD), justificando a alta prioridade.
+Os **riscos considerados mais importantes** para a plataforma foram o **R01 (Sequestro de contas / Spoofing)** e o **R06 (Acesso a dados de outros usuários via IDOR)**, ambos classificados com nível **Crítico (Nota 12)**, seguidos pelos riscos **R02, R03, R04 e R07**, classificados como de nível **Alto**. 
 
-A estratégia de tratamento predominante adotada pelo grupo foi a de Mitigação, buscando reduzir a probabilidade e o impacto das ameaças através da implementação de controles técnicos. Nesse contexto, as funções do NIST CSF mais relevantes para o nosso sistema foram a função PROTEGER (PR), com foco no controle de identidade, autenticação (PR.AA) e segurança de dados (PR.DS), seguida pela função DETECTAR (DE), essencial para identificar anomalias nos logs e transações.
+As **razões que determinaram essa priorização** residem na gravidade do impacto direto sobre os ativos vitais do RapidoFood: dados pessoais e de localização de clientes (protegidos pela LGPD), credenciais de acesso e a integridade do fluxo financeiro da aplicação. O comprometimento do R01 ou do R06 expõe massivamente os usuários a fraudes e chantagens, além de sujeitar a empresa a penalidades jurídicas e perdas reputacionais graves.
 
-Os controles considerados essenciais para a operação segura do RapidoFood incluem:
+A **estratégia de tratamento predominante** adotada foi a de *Mitigação (Reduzir)*, aplicando salvaguardas técnicas e operacionais para diminuir a probabilidade e conter o impacto de eventuais ataques. Dentro desse escopo, as **funções do NIST CSF mais relevantes** para o nosso sistema foram:
+1. **Protect (PR):** função central do plano, responsável pela implementação de MFA, controle de acesso *server-side* (RBAC e autorização no nível de objeto) e validação obrigatória de valores no backend.
+2. **Detect (DE):** essencial para a criação de rastreabilidade, registro de logs auditáveis e alertas sobre volume anômalo de requisições ou tentativas indevidas de acesso a pedidos de terceiros.
 
-1. **Implementação de Autenticação Multifator (MFA).**
+Os **controles considerados essenciais** para garantir a segurança da plataforma incluem:
+* Implementação de Autenticação Múltiplo Fator (MFA) e bloqueio temporário por *rate limiting*.
+* Validação e recálculo de valores monetários estritamente no lado do servidor (*server-side*), rejeitando dados adulterados enviados pelo cliente.
+* Verificação rigorosa da propriedade do objeto no backend para bloquear vulnerabilidades IDOR.
+* Confirmação de entrega baseada em código descartável (OTP) enviado ao cliente.
 
-2. **Validação obrigatória de autorização e recálculo de valores estritamente no lado do servidor (server-side).**
+As **principais dificuldades encontradas pelo grupo** envolveram a delimitação precisa entre os conceitos do NIST CSF — especificamente a diferenciação entre o controle técnico concreto, o resultado esperado da salvaguarda e a resposta a incidentes —, bem como a atribuição de notas de probabilidade coerentes para ataques que dependem de fatores do cliente (como *credential stuffing*).
 
-3. **Uso de códigos de confirmação descartáveis (OTP) para validar a entrega dos pedidos.**
-
-As principais dificuldades encontradas pelo grupo durante esta etapa envolveram a diferenciação exata entre as funções do NIST (especialmente separar os resultados esperados dos controles técnicos aplicados) e a quantificação objetiva dos riscos qualitativos. A principal limitação da avaliação é que a estimativa do risco residual foi feita de forma teórica; em um cenário real, esses valores só poderiam ser validados após testes práticos em ambiente de produção.
+A **principal limitação desta avaliação** reside no fato de que os níveis de *risco residual* apresentados são estimativas teóricas. Conforme as diretrizes da disciplina, o risco só poderá ser considerado efetivamente reduzido após a implementação dos controles na arquitetura e a validação por meio de testes automatizados de segurança.
