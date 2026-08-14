@@ -138,19 +138,33 @@ encaminhar a transação ao gateway de pagamento.
 
 **Responsável: Andre**
 
-Descrever brevemente o que deveria acontecer depois que uma regra de
-detecção gerar um alerta.
+A emissão de um alerta por uma regra de detecção marca o início do fluxo de resposta a incidentes do RapidoFood. O processo pós-alerta deve seguir um roteiro padronizado e auditável composto pelas seguintes etapas:
 
-Considerar, conforme o cenário:
+1. **Triagem e Análise Inicial:**
+   A equipe de resposta a incidentes (ou o sistema automatizado de SIEM/Monitoramento) recebe o alerta e analisa as fontes de dados associadas (logs da API, histórico do usuário, IP de origem, timestamp e payload). O objetivo é avaliar a gravidade e determinar se o alerta representa um ataque real (**verdadeiro positivo**) ou um comportamento atípico do sistema/usuário legítimo (**falso positivo**).
 
-- análise do alerta;
-- confirmação ou descarte do evento;
-- contenção inicial, quando necessária;
-- registro do incidente;
-- comunicação aos responsáveis;
-- encaminhamento para tratamento e recuperação.
+2. **Confirmação ou Descarte:**
+   * *Caso seja Falso Positivo:* O evento é registrado, arquivado e a regra de detecção é ajustada para calibrar a sensibilidade e evitar fadiga de alertas.
+   * *Caso seja Verdadeiro Positivo:* Confirma-se a ocorrência do incidente de segurança e ele é classificado pelo nível de severidade (Baixa, Média, Alta ou Crítica).
 
-*(preencher — Andre)*
+3. **Contenção Inicial:**
+   Execução imediata de medidas automatizadas ou manuais para interromper a ação maliciosa em andamento e conter os danos:
+   * Bloqueio temporário do endereço IP ou da conta envolvida na suspeita.
+   * Revogação imediata dos tokens de sessão JWT ativos do usuário comprometido.
+   * Rejeição automática de transações financeiras com inconsistência de valor.
+   * *Atenção:* Os registros de acesso (logs) **nunca** devem ser apagados durante a contenção, garantindo a preservação das evidências para investigação.
+
+4. **Registro do Incidente:**
+   Abertura de um chamado/registro de incidente formal contendo horário do disparo, regra violada, ativos afetados, dados expostos, ações de contenção adotadas e a identificação do analista responsável.
+
+5. **Comunicação aos Responsáveis:**
+   * Notificação dos times de Desenvolvimento e Infraestrutura/DevSecOps para análise técnica da brecha.
+   * Acionamento do Encarregado de Dados (DPO) e do time Jurídico caso o incidente envolva o vazamento de dados pessoais (como no R06), garantindo a conformidade com a LGPD.
+
+6. **Tratamento, Erradicação e Recuperação:**
+   * Correção da vulnerabilidade na aplicação (ex: aplicação de um *patch* no endpoint vulnerável).
+   * Restauração da operação segura do sistema e desbloqueio das contas atingidas após redefinição de credenciais.
+   * Condução de uma reunião de lições aprendidas (*post-mortem*) para aprimorar os controles preventivos e as regras de monitoramento.
 
 ---
 
