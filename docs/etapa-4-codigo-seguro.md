@@ -153,13 +153,81 @@ Os testes deverão ser definidos antes da apresentação da implementação.
 
 **Responsável: Lucas**
 
-*(preencher — Lucas)*
+Apresentamos abaixo o pseudocódigo do endpoint de consulta aos dados de um pedido (`GET /api/v1/pedidos/{pedido_id}`). A implementação aplica verificação de autorização de nível de objeto (*Object-Level Authorization*), assegurando que o `usuario_id` extraído do token JWT autenticado corresponda ao `cliente_id` proprietário do pedido no banco de dados.
+
+```python
+// Pseudocódigo: Endpoint GET /api/v1/pedidos/{pedido_id} (API de Pedidos)
+funcao obterDetalhesPedido(Requisicao req, String pedido_id):
+    
+    // 1. Validação de Autenticação (Token JWT no Header)
+    token = req.headers.obter("Authorization")
+    se token == nulo ou nao TokenJWT.validarAssinatura(token):
+        retornar ErroHTTP(401, "Token de autenticação ausente ou inválido.")
+        
+    usuario_autenticado_id = TokenJWT.extrairClaim(token, "usuario_id")
+    usuario_role = TokenJWT.extrairClaim(token, "role")
+    
+    // 2. Validação sintática do identificador do pedido (UUIDv4)
+    se nao Validador.isUUID(pedido_id):
+        retornar ErroHTTP(400, "Identificador de pedido em formato inválido.")
+        
+    // 3. Consulta segura ao Banco de Dados (Query Parametrizada)
+    pedido = DB.consultar(
+        "SELECT id, cliente_id, restaurante_id, status, itens, total, endereco_entrega, criado_em " +
+        "FROM Pedidos WHERE id = ?", 
+        pedido_id
+    )
+    
+    // 4. Verificação de Existência do Pedido
+    se pedido == nulo:
+        retornar ErroHTTP(404, "Pedido não encontrado.")
+        
+    // 5. CONTROLE DE AUTORIZAÇÃO DE NÍVEL DE OBJETO (Mitigação do Risco R06 / IDOR)
+    // Bloqueia qualquer tentativa de ler pedidos de terceiros (exceto se for ADMIN)
+    se (pedido.cliente_id != usuario_autenticado_id) e (usuario_role != "ADMIN"):
+        
+        // Registra o evento de tentativa de acesso indevido nos logs de segurança
+        Logger.registrar(
+            nivel: "ALERTA",
+            evento: "Tentativa de acesso não autorizado a pedido de terceiro (Possível IDOR)",
+            usuario_solicitante: usuario_autenticado_id,
+            pedido_solicitado: pedido_id,
+            dono_legitimo_pedido: pedido.cliente_id,
+            ip_origem: req.ip,
+            user_agent: req.headers.obter("User-Agent"),
+            horario: DataHora.agoraUTC()
+        )
+        
+        // Nega o acesso imediatamente com 403 Forbidden sem vazar dados sensíveis
+        retornar ErroHTTP(403, "Acesso não autorizado ao recurso solicitado.")
+        
+    // 6. Autorização bem-sucedida: Retorna os dados apenas ao proprietário legítimo
+    dados_sanitizados = {
+        "id": pedido.id,
+        "status": pedido.status,
+        "itens": pedido.itens,
+        "total": pedido.total,
+        "endereco_entrega": pedido.endereco_entrega,
+        "criado_em": pedido.criado_em
+    }
+    
+    Logger.registrar(
+        nivel: "INFO",
+        evento: "Consulta de pedido autorizada com sucesso",
+        usuario: usuario_autenticado_id,
+        pedido_id: pedido.id
+    )
+    
+    retornar SucessoHTTP(200, "Pedido recuperado com sucesso.", dados_sanitizados)
+```
 
 ### 2.5 Resultado esperado
 
 **Responsável: Lucas**
 
-*(preencher — Lucas)*
+Com a introdução desta prática de autorização no lado do servidor, o RapidoFood elimina a vulnerabilidade de *Insecure Direct Object References* (IDOR).
+
+O resultado esperado é que qualquer usuário consiga consultar unicamente os seus próprios pedidos (cenário válido **TS03**, recebendo `HTTP 200 OK`). Caso um atacante autenticado tente enumerar identificadores ou alterar o ID da URL para inspecionar pedidos de terceiros (cenário de abuso **TS04**), a aplicação interceptará a divergência entre `pedido.cliente_id` e o `usuario_autenticado_id` do token JWT. O pedido será sumariamente bloqueado com `HTTP 403 Forbidden` e um evento de alerta será registrado no SIEM, impedindo o vazamento de dados de endereço, nome ou consumo de clientes, em total conformidade com a LGPD e atendendo ao requisito **RS02** derivado do risco **R06**.
 
 ---
 
@@ -190,7 +258,8 @@ O pseudocódigo do recálculo de valores da API foi detalhado diretamente na se�
 
 **Responsável: Lucas**
 
-*(preencher nome do arquivo ou material produzido)*
+O pseudocódigo da verificação de propriedade do pedido foi detalhado na seção 2.4 deste documento. O arquivo dedicado contendo o pseudocódigo e a documentação completa da prática para mitigação do risco R06 (IDOR) está disponível em:
+[`codigo/etapa-4/pratica-2-autorizacao-pedidos.md`](../codigo/etapa-4/pratica-2-autorizacao-pedidos.md)
 
 ---
 
