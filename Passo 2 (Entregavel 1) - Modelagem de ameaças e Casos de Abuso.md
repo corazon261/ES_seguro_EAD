@@ -281,6 +281,30 @@ ameaça T07 da tabela STRIDE.)_
 
 **Categorias STRIDE relacionadas:** Tampering, Repudiation e Spoofing.
 
+---
+
+### CA09 — Alteração indevida do status do pedido para fraude de estorno
+
+**Ator:** cliente mal-intencionado (com conhecimentos técnicos básicos).
+
+**Objetivo:** Forçar o cancelamento de um pedido que já está em trânsito para acionar o sistema de estorno automático, recebendo a refeição de graça.
+
+**Condições necessárias:**
+- A API de atualização de status do pedido (ex: `PUT /api/v1/pedidos/{id}/status`) não restringe a ação estritamente aos perfis de "Restaurante" ou "Administrador".
+- O sistema possui uma regra de negócio que estorna automaticamente pagamentos de pedidos cancelados antes da entrega.
+
+**Fluxo de abuso:**
+1. O atacante realiza um pedido legítimo e aguarda o restaurante aceitar e despachar a refeição com o entregador.
+2. Utilizando uma ferramenta de interceptação de requisições (ex: Burp Suite ou o próprio DevTools do navegador), o atacante descobre o formato da requisição que atualiza o status do pedido.
+3. Ele envia uma requisição manual para o servidor alterando o campo `status` do seu pedido para `CANCELADO`.
+4. O backend, falhando em validar o perfil do autor da requisição, acata a mudança.
+5. O sistema de pagamentos é acionado automaticamente e devolve o dinheiro ao cartão do atacante.
+6. O entregador, que já estava na rua e pode estar sem sinal/atualização em tempo real, chega ao destino e entrega a comida.
+
+**Impacto esperado:** Prejuízo financeiro direto e integral para o restaurante (perda de insumos e taxa de entrega) e para a plataforma (estorno bancário via cartão de crédito).
+
+**Categorias STRIDE relacionadas:** Tampering (modificação do status) e Elevation of Privilege (ação executada por perfil sem permissão).
+
 ## 7. Considerações finais
 
 **Ameaças mais preocupantes:** acesso indevido a contas de usuários, alteração de pedidos e valores, obtenção de privilégios administrativos, exposição de dados pessoais e indisponibilidade do sistema causada por ataques de negação de serviço.
