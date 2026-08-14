@@ -141,29 +141,27 @@ A revisão não identificou conflitos entre os requisitos desta etapa e os risco
 
 ## 6. Revisão das referências
 
-**Responsável: Luiz**
+**Responsável:** Gustavo**
 
-Verificar se as referências utilizadas nas vulnerabilidades estão
-identificadas corretamente e se a relação entre cada vulnerabilidade e o
-risco do RapidoFood está explicada.
+A validação das referências técnicas utilizadas na catalogação das vulnerabilidades (Seção 2) confirma a precisão dos mapeamentos para o contexto do **RapidoFood**:
 
-*(preencher após a parte de vulnerabilidades)*
+1. **Validação do R01 (CWE-307 / OWASP A07:2021):** O enquadramento em *Identification and Authentication Failures* e *CWE-307* é preciso, pois descreve diretamente a ausência de limitação de tentativas e a falta do fator duplo de autenticação na rota de login (`/api/v1/auth/login`), técnica primária explorada em ataques de *credential stuffing*.
+2. **Validação do R06 (CWE-639 / OWASP A01:2021):** A associação com *Broken Access Control* e *CWE-639 (IDOR)* reflete adequadamente a falha no endpoint `/api/v1/pedidos/{id}`, em que a aplicação falha ao não relacionar a chave primária do recurso ao sujeito autenticado no token JWT.
+3. **Validação do R04 (CWE-472 / OWASP A04:2021):** O mapeamento em *Insecure Design* e *CWE-472* é correto, pois conceitua a falha de arquitetura em confiar no envio de parâmetros imutáveis (como preços unitários e taxas) a partir do cliente sem revalidação *server-side*.
+4. **Adequação dos Cheat Sheets da OWASP:** As referências aos manuais práticos da OWASP (*Authentication*, *Authorization* e *Input Validation*) fornecem diretrizes consolidadas e reconhecidas para orientar as práticas de implementação segura das etapas seguintes.
 
 ---
 
 ## 7. Revisão final da arquitetura
 
-**Responsável: Gustavo**
+**Responsável:** Gustavo**
 
-Verificar se:
+Após a análise integrada dos artefatos desenvolvidos nesta Etapa 3, confirma-se a consistência, a coerência e a viabilidade da arquitetura de segurança proposta para o **RapidoFood**:
 
-- as três decisões estão relacionadas aos riscos;
-- o diagrama contém os principais componentes e controles;
-- as decisões são coerentes com os requisitos de segurança;
-- a arquitetura proposta é compatível com o sistema RapidoFood;
-- o conteúdo está organizado e pronto para a próxima etapa.
-
-*(preencher após todas as partes anteriores)*
+1. **Alinhamento dos Requisitos e Decisões de Arquitetura:** As Decisões de Arquitetura (DA01 a DA03) e os Requisitos de Segurança (RS01 a RS03) tratam diretamente os riscos de maior prioridade (Críticos e Altos) herdados da Etapa 2 (R01, R06 e R04), garantindo cobertura contra sequestro de contas, vazamento de PII e adulteração de valores.
+2. **Coerência com o Diagrama de Arquitetura:** O diagrama contempla todos os componentes essenciais da solução (Interfaces, API Gateway/WAF, Serviço de Auth, Módulo de Autorização Anti-IDOR, Recálculo Server-Side, Banco de Dados isolado e SIEM/Auditoria), posicionando adequadamente os pontos de verificação e os controles mitigadores.
+3. **Compatibilidade Operacional:** Os controles definidos garantem o cumprimento dos requisitos legais (LGPD) e mitigam riscos de fraude financeira sem comprometer o fluxo e o desempenho das transações no ecossistema do RapidoFood.
+4. **Prontidão do Documento:** A estrutura foi completamente revisada, os mapeamentos da OWASP/CWE foram auditados e a arquitetura está formalmente validada para embasar as próximas etapas de implementação e testes de segurança.
 
 ---
 
