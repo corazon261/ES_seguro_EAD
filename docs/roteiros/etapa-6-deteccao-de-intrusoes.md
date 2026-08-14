@@ -89,13 +89,12 @@ A escolha deverá ser relacionada aos riscos do sistema.
 
 | Campo | Conteúdo |
 |---|---|
-| Risco observado | *(preencher — Lucas)* |
-| Fonte de dados | *(preencher — Lucas)* |
-| Condição de alerta | *(preencher — Lucas)* |
-| Resposta inicial | *(preencher — Lucas)* |
+| Risco observado | **R01 — Sequestro de conta (Spoofing)** (Crítico, 12), originado da ameaça T01 e do caso de abuso CA01. |
+| Fonte de dados | Logs estruturados do Serviço de Autenticação (`Auth Service`) e do API Gateway no endpoint `/api/v1/auth/login`, registrando: timestamp em UTC, IP de origem, User-Agent, identificador da conta (e-mail/CPF informado), resultado da tentativa (`FALHA_SENHA`, `FALHA_MFA`, `SUCESSO`) e tempo de resposta da requisição. |
+| Condição de alerta | Disparar alerta de severidade alta quando ocorrerem: <br>1. **5 ou mais tentativas consecutivas de autenticação com falha para a mesma conta em uma janela de 5 minutos** (indicativo de ataque direcionado de força bruta); OU <br>2. **15 ou mais falhas de autenticação originadas do mesmo endereço IP contra contas distintas em uma janela de 10 minutos** (indicativo de ataque distribuído de *credential stuffing* ou enumeração automatizada de credenciais). |
+| Resposta inicial | 1. Aplicar bloqueio temporário de 15 minutos para novas tentativas de autenticação originadas pelo IP suspeito e/ou direcionadas à conta-alvo, ativando desafio CAPTCHA e revalidação estrita de MFA no desbloqueio;<br>2. Enviar imediatamente uma notificação transacional de segurança (via e-mail e SMS) ao titular legítimo da conta, alertando sobre a atividade suspeita e orientando redefinição de senha preventiva;<br>3. Revogar tokens JWT de sessões ativas caso tenha havido sucesso em qualquer tentativa anterior recente do mesmo IP;<br>4. Preservar os logs forenses de conexão e abrir incidente automático no SIEM para análise operacional. |
 
-A regra deverá representar um comportamento suspeito relacionado a um dos
-riscos do RapidoFood.
+A regra permite identificar proativamente tentativas automatizadas de quebra de autenticação antes que atacantes obtenham sucesso no comprometimento da conta de clientes ou entregadores. Ela complementa a prevenção estabelecida no **DA01 / RS01** (MFA e Rate Limiting).
 
 ---
 
