@@ -20,7 +20,7 @@ Sistema escolhido: **Aplicativo de Delivery** (RapidoFood).
 | **Gustavo Borges Arrussul Veiga** | Passo 1 — seção 3 (Usuários, ativos e pontos de interação) | Tampering · Repudiation | CA02 | Diagrama de fluxo de dados |
 | **Luiz Hermano Bernardes Martins** | (apoio ao Passo 1 / visão de fluxo) | Information Disclosure | CA03 | Diagrama de contexto |
 | **Renata Vassalo** | Passo 2 — seção 7 (Considerações finais) | Denial of Service | CA04 | Diagrama de casos de abuso |
-| **Andre Luiz Montanha de Abreu** | Passo 2 — Casos Extras e Revisão do Entregável 1 | Apoio estratégico | CA06 (Fraude de Cupons) | Revisão final de formatação |
+| **Andre Luiz Montanha de Abreu** | Decisões de Arquitetura & Código Seguro | Tampering / Elevation of Privilege | T11 & CA09 (Fraude de estorno) + Considerações NIST |
 
 ### Trabalho colaborativo (arquivo do Entregável 1)
 
