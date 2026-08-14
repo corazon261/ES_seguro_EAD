@@ -271,7 +271,7 @@ A definição da sequência de implementação dos controles do **RapidoFood** f
 | R01   | Crítico (12)  | Médio (≈6)              | MFA obrigatório e monitoramento de login ativos e testados |
 | R02   | Alto (8)      | Baixo–Médio (≈4)        | Autorização server-side coberta por testes automatizados |
 | R03   | Alto (9)      | Médio (≈4–6)            | OTP de entrega adotado e detecção de mock location em produção |
-| R04   | *(preencher)* | *(preencher)*           | *(preencher)* |
+| R04   | Alto (9)      | Baixo–Médio (≈3)        | Recálculo de preços server-side, rejeição de divergências e testes automatizados ativos |
 | R05   | Médio (6)     | Baixo (≈3)              | Código de confirmação (OTP), logs de auditoria com timestamp e validação da entrega ativos e testados |
 | R06   | Crítico (12)  | Médio (≈6)              | Autorização server-side por objeto, testes contra IDOR e monitoramento de acessos indevidos ativos e testados |
 | R07   | Alto (9)      | Médio (≈4–6)            | Mascaramento de dados, expiração do acesso após a entrega e testes de revogação ativos e testados |
