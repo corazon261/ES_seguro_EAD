@@ -21,22 +21,24 @@ O grupo deverá elaborar:
 
 **Responsável: Lucas**
 
-Descrever como a segurança começa no planejamento do projeto, considerando:
+A segurança no ciclo de vida do RapidoFood começa na fase inicial de concepção e planejamento, adotando o conceito de *Shift-Left Security* e *Security by Design*. Antes de qualquer especificação técnica ou desenvolvimento de código, a equipe conduz a análise estruturada do sistema:
 
-- identificação das ameaças;
-- casos de abuso;
-- ativos importantes;
-- riscos identificados na Etapa 1.
+- **Identificação de Ativos e Usuários:** Mapeamento de todos os dados sensíveis (dados pessoais de clientes sob a LGPD, cartões salvos, geolocalização e histórico de pedidos) e definição dos papéis de acesso (Cliente, Entregador, Restaurante, Admin);
+- **Modelagem de Ameaças (STRIDE):** Aplicação sistemática das 6 categorias do STRIDE em cada ponto de interação e fluxo de dados, identificando previamente vetores de ataque como sequestro de contas (T01), adulteração de preços (T02) e quebra de autorização (T04);
+- **Casos de Abuso:** Criação de cenários práticos que simulam o comportamento do atacante (CA01 a CA04), orientando a definição dos requisitos de proteção e dos testes futuros.
 
 **Evidências produzidas:**
 
-- modelagem STRIDE;
-- casos de abuso;
-- identificação dos ativos e usuários.
+- Matriz de modelagem de ameaças STRIDE (tabela de ameaças T01 a T11);
+- Documentação formal dos Casos de Abuso (CA01 a CA04);
+- Mapeamento de usuários, ativos sensíveis e fronteiras de confiança (*Trust Boundaries*).
 
 **Condição para continuar:**
 
-*(preencher — Lucas)*
+O pipeline DevSecOps só avança da fase de planejamento para a fase de *Requisitos e Arquitetura* se:
+1. A modelagem de ameaças STRIDE e os casos de abuso da funcionalidade estiverem formalmente documentados e aprovados pelo time de segurança;
+2. Todos os riscos identificados de nível **Alto ou Crítico** (ex.: R01, R04, R06) possuírem estratégias de tratamento previamente definidas (evitar ou reduzir);
+3. Nenhum fluxo envolvendo dados protegidos pela LGPD ou transações financeiras seja liberado sem o mapeamento explícito de seus controles de segurança. Funcionalidades sem essa validação são bloqueadas no planejamento.
 
 ---
 
