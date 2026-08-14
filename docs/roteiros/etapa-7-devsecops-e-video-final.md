@@ -176,14 +176,11 @@ aprovadas pelo responsável de segurança.
 
 **Responsável: Andre**
 
-Descrever brevemente quais condições de segurança deveriam ser verificadas
-antes da implantação.
-
-Considerar os riscos e controles definidos nas etapas anteriores.
+A implantação (*Deployment*) é o estágio onde a versão validada do código é liberada para o ambiente de produção. Antes que o RapidoFood vá ao ar, a esteira verifica automaticamente se as variáveis de ambiente sensíveis (como tokens do Gateway de Pagamento ou senhas do Banco de Dados) estão armazenadas de forma segura e não em texto claro no código. Além disso, a etapa assegura que as proteções de infraestrutura exigidas nas decisões de arquitetura, como o Rate Limiting e a obrigatoriedade de recálculo Server-Side (**R04**), estejam ativadas e configuradas no ambiente final.
 
 **Condição para continuar:**
 
-*(preencher — Andre)*
+A implantação em produção **só é liberada** se 100% dos testes de segurança automatizados da etapa anterior tiverem passado (garantindo as restrições do R06 e R04), e se o relatório do teste dinâmico (OWASP ZAP) não possuir vulnerabilidades críticas ou altas sem tratamento. Caso exista qualquer bloqueio na etapa de testes ou vazamento de segredos, o *deploy* é abortado e a equipe recebe um alerta imediato.
 
 ---
 
