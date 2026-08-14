@@ -63,11 +63,21 @@ disponibilidade do serviço.
 | [Passo 2 (Entregavel 1) - Modelagem de ameaças e Casos de Abuso.md](<Passo 2 (Entregavel 1) - Modelagem de ameaças e Casos de Abuso.md>) | **Entregável 1** — seções 5 (STRIDE), 6 (Casos de abuso) e 7 (Considerações finais) |
 | [docs/plano-de-trabalho.md](docs/plano-de-trabalho.md) | **Plano geral das 7 etapas + divisão entre os integrantes** |
 | [docs/etapa-2-riscos-nist.md](docs/etapa-2-riscos-nist.md) | **Etapa 2** — Análise, Priorização e Tratamento de Riscos (NIST CSF) |
-| [docs/divisao-de-tarefas.md](docs/divisao-de-tarefas.md) | Divisão de tarefas da Etapa 1 |
-| `diagramas/` | Diagramas e seus arquivos-fonte |
+| [docs/etapa-3-arquitetura-segura.md](docs/etapa-3-arquitetura-segura.md) | **Etapa 3** — Projeto de Arquitetura Segura |
+| [docs/etapa-4-codigo-seguro.md](docs/etapa-4-codigo-seguro.md) | **Etapa 4** — Código Seguro e Testes de Segurança |
+| [docs/etapa-5-relatorio-da-verificacao.md](docs/etapa-5-relatorio-da-verificacao.md) | **Etapa 5** — Verificação de Vulnerabilidades (OWASP ZAP) |
+| [docs/roteiros/etapa-6-deteccao-de-intrusoes.md](docs/roteiros/etapa-6-deteccao-de-intrusoes.md) | **Etapa 6** — Monitoramento e Detecção de Intrusões |
+| [docs/roteiros/etapa-7-devsecops-e-video-final.md](docs/roteiros/etapa-7-devsecops-e-video-final.md) | **Etapa 7** — DevSecOps e Roteiro do Vídeo Final |
+| `diagramas/` | Diagramas de contexto, fluxo de dados e arquitetura segura |
+| `codigo/` | Materiais e pseudocódigo de práticas de código seguro |
+| `docs/evidencias/` | Relatórios e capturas de tela das verificações de segurança |
 
 ### Situação das etapas
 
-- [x] **Etapa 1** — Ameaças STRIDE (T01–T10) e Casos de Abuso (CA01–CA08) — **concluída**
-- [~] **Etapa 2** — Riscos (NIST CSF): arcabouço + registro de riscos prontos; R01–R03 (Lucas) preenchidos; R04–R08 e seções finais com os responsáveis
-- [ ] Etapas 3 a 7 — ver [plano de trabalho](docs/plano-de-trabalho.md)
+- [x] **Etapa 1** — Ameaças STRIDE e Casos de Abuso — **Concluída**
+- [x] **Etapa 2** — Análise, Priorização e Tratamento de Riscos (NIST CSF) — **Concluída**
+- [x] **Etapa 3** — Projeto de Arquitetura Segura — **Concluída**
+- [x] **Etapa 4** — Código Seguro e Testes — **Concluída**
+- [x] **Etapa 5** — Verificação de Vulnerabilidades (ZAP) — **Concluída**
+- [x] **Etapa 6** — Monitoramento e Detecção de Intrusões — **Concluída**
+- [x] **Etapa 7** — DevSecOps e Roteiro de Vídeo Final — **Concluída**

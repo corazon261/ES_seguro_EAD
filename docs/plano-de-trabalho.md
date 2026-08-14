@@ -25,11 +25,11 @@
 | --- | --- | --- | --- |
 | **1 — Ameaças STRIDE e Casos de Abuso** | Descrição, ativos, STRIDE, casos de abuso, diagramas | `Passo 1...md`, `Passo 2 (Entregavel 1)...md` | ✅ **Concluída** |
 | **2 — Análise, Priorização e Tratamento de Riscos (NIST CSF)** | Critérios de prob./impacto, registro de riscos, priorização, tratamento, mapeamento NIST, risco residual | `docs/etapa-2-riscos-nist.md` | ✅ **Concluída** |
-| **3 — Projeto de Arquitetura Segura** | 3 requisitos de segurança, 3 vulnerabilidades (CWE/OWASP), 1 diagrama, 3 decisões | `docs/etapa-3-arquitetura-segura.md` + `diagramas/etapa-3/` | ⬜ |
-| **4 — Código Seguro e Testes** | 2 práticas de código seguro, cada uma com 2 testes definidos antes | `docs/etapa-4-codigo-seguro.md` + `codigo/etapa-4/` | ⬜ |
+| **3 — Projeto de Arquitetura Segura** | 3 requisitos de segurança, 3 vulnerabilidades (CWE/OWASP), 1 diagrama, 3 decisões | `docs/etapa-3-arquitetura-segura.md` + `diagramas/etapa-3/` | ✅ **Concluída** |
+| **4 — Código Seguro e Testes** | 2 práticas de código seguro, cada uma com 2 testes definidos antes | `docs/etapa-4-codigo-seguro.md` + `codigo/etapa-4/` | ✅ **Concluída** |
 | **5 — Verificação de Vulnerabilidades** | 1 sessão com ferramenta (ZAP), análise de 3 achados + correções | `evidencias/etapa-5/relatorio-da-verificacao.md` | ✅ **Concluída** |
-| **6 — Monitoramento e Detecção de Intrusões** | Roteiro textual + 3 regras de detecção | `roteiros/etapa-6-deteccao-de-intrusoes.md` | ⬜ |
-| **7 — DevSecOps e Vídeo Final** | Pipeline (texto/diagrama) + roteiro + vídeo de 5–8 min | `roteiros/etapa-7-devsecops-e-video-final.md` | ⬜ |
+| **6 — Monitoramento e Detecção de Intrusões** | Roteiro textual + 3 regras de detecção | `roteiros/etapa-6-deteccao-de-intrusoes.md` | ✅ **Concluída** |
+| **7 — DevSecOps e Vídeo Final** | Pipeline (texto/diagrama) + roteiro + vídeo de 5–8 min | `roteiros/etapa-7-devsecops-e-video-final.md` | ✅ **Concluída** |
 
 > As Etapas 3 a 7 foram **reduzidas ao mínimo** pelo professor. Não é preciso
 > implementar sistema completo: pseudocódigo, descrições e diagramas são aceitos.
