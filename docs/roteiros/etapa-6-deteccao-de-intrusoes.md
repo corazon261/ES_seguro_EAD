@@ -14,13 +14,14 @@ intrusões. O entregável será um roteiro ou descrição textual.
 
 **Responsável: Andre**
 
-Explicar brevemente:
+A **detecção de intrusões** consiste no monitoramento contínuo e na análise dos eventos e logs gerados pelo sistema para identificar atividades anômalas, não autorizadas ou maliciosas que busquem violar as políticas de segurança da aplicação.
 
-- o que significa detectar uma intrusão;
-- qual é o objetivo da detecção;
-- por que o monitoramento é importante para o RapidoFood.
+O **objetivo da detecção** é conceder visibilidade operacional à equipe de segurança, reduzindo o tempo de identificação (*Mean Time to Detect - MTTD*) e de resposta a incidentes. Diferente da prevenção — que busca erguer barreiras antes que o ataque aconteça —, a detecção atua identificando comportamentos suspeitos em tempo de execução ou após a tentativa de exploração.
 
-*(preencher — Andre)*
+Para o **RapidoFood**, a detecção de intrusões é fundamental pelos seguintes motivos:
+* **Proteção de ativos sensíveis:** A plataforma lida diretamente com dados pessoais de clientes (PII), endereços de entrega, geolocalização de entregadores e transações financeiras com gateways de pagamento.
+* **Complementaridade ao princípio de Defesa em Profundidade:** Nenhum controle preventivo é infalível. Mesmo com autenticação forte (MFA) e validações *server-side*, atacantes podem tentar explorar falhas de lógica, realizar ataques de força bruta ou enumerar identificadores.
+* **Conformidade com a LGPD e regulamentações:** A detecção rápida de acessos indevidos a dados de terceiros (como falhas de autorização IDOR) permite isolar a ameaça e cumprir com as obrigações de notificação de incidentes aos titulares e à ANPD.
 
 ---
 
