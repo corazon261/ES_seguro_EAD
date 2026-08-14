@@ -12,7 +12,7 @@
   - Gustavo Borges Arrussul Veiga — @GustavoArrussul
   - Luiz Hermano Bernardes Martins — @LuizHerm
   - Renata Rodrigues Vassalo da Rosa — @renatavassallo
-  - Andre Luiz Montanha de Abreu — _(usuário GitHub a preencher)_
+  - Andre Luiz Montanha de Abreu — @andreluiz2431
 - **Repositório:** https://github.com/corazon261/ES_seguro_EAD
 - **Justificativa:** Escolhemos um aplicativo de delivery porque ele reúne, em um
   único sistema, características que tornam a análise de segurança rica e
