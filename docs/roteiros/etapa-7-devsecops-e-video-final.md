@@ -44,10 +44,7 @@ Descrever como a segurança começa no planejamento do projeto, considerando:
 
 **Responsável: Andre**
 
-Descrever como os riscos identificados são transformados em requisitos
-de segurança e decisões de arquitetura.
-
-Considerar os resultados da Etapa 3.
+Nesta etapa do pipeline, os riscos priorizados no mapeamento inicial são traduzidos em regras claras de desenvolvimento (requisitos de segurança) e escolhas estruturais do sistema (decisões de arquitetura). Por exemplo, o risco crítico de vazamento de dados de terceiros (**R06**) gerou a obrigação de verificar a propriedade do pedido no servidor (**RS02**), o que moldou a decisão arquitetural de aplicar um Módulo de Autorização com mitigação de IDOR diretamente na API de Pedidos (**DA02**). A segurança deixa de ser teórica e passa a ser parte do design (*Security by Design*).
 
 **Evidências produzidas:**
 
@@ -58,7 +55,7 @@ Considerar os resultados da Etapa 3.
 
 **Condição para continuar:**
 
-*(preencher — Andre)*
+A esteira de desenvolvimento só avança para a fase de codificação (*Build/Implementação*) se todos os riscos de nível Alto e Crítico tiverem requisitos de segurança formais associados, e se o diagrama de arquitetura contemplar os controles mitigadores (ex: Gateway com Rate Limit e Auth com MFA). Nenhuma funcionalidade nova pode começar a ser programada se a sua arquitetura de segurança não tiver sido aprovada pela equipe técnica.
 
 ---
 
