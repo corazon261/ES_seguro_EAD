@@ -32,7 +32,7 @@ Sistema escolhido: **Aplicativo de Delivery** (RapidoFood).
 
 - ✅ Lucas — README (1 e 2), STRIDE Spoofing/Elevation (T01, T07–T09), CA01.
 - ✅ Renata — STRIDE DoS (T05, T06) e CA04.
-- ⬜ Gustavo — revisar/expandir seção 3, STRIDE Tampering/Repudiation (T02, T03), CA02.
+- ✅ Gustavo — revisar/expandir seção 3, STRIDE Tampering/Repudiation (T02, T03), CA02.
 - ✅ Luiz — STRIDE Information Disclosure (T04, T10), CA03 e seção 4 (visão geral
   da arquitetura + diagrama de contexto).
 
